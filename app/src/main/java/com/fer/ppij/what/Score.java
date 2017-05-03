@@ -5,4 +5,7 @@ package com.fer.ppij.what;
  */
 
 public class Score {
+
+
+    //radi
 }
