@@ -43,18 +43,22 @@
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/answerA"
+                android:onClick="OnAnswerAClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/answerB"
+                android:onClick="OnAnswerBClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/answerC"
+                android:onClick="OnAnswerCClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/answerD"
+                android:onClick="OnAnswerDClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -73,6 +77,7 @@
                 android:layout_gravity="center"
                 android:hint="Unesi svoj odgovor"/>
             <Button
+                android:id="@+id/check_answer_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Potvrdi odgovor"

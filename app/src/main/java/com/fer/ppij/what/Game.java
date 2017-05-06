@@ -1,5 +1,6 @@
 package com.fer.ppij.what;
 
+import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.AbstractQuestion;
 
 import java.util.List;
@@ -10,22 +11,24 @@ import java.util.List;
 //za pamcenje potrebnih aspekata igre(kategorija,score,nick,...)
 public class Game {
 
-    private int score;
+    private int score = 0;
     private String category;
     private String nick;
-    private int currentQuestion;
+    private int currentQuestionNumber = 0;
     private List<AbstractQuestion> questionPool;
+    private int lives;
+    boolean finished = false;
 
     public List<AbstractQuestion> getQuestionPool() {
         return questionPool;
     }
 
-    public Game(String category, String nick) {
+    public Game(String category, String nick, int wrongAnswers) {
         this.category = category;
         this.nick = nick;
-        score = 0;
-        currentQuestion = 0;
-
+        //TODO callback
+        this.questionPool = QuestionDAL.getQuestions(category);
+        this.lives = wrongAnswers;
     }
 
 
@@ -41,13 +44,26 @@ public class Game {
         return nick;
     }
 
-    public int getCurrentQuestion() {
-        return currentQuestion;
+    public boolean isFinished() {
+        return finished;
     }
 
-    public void nextQuestion(){
-        currentQuestion +=1;
+    public  AbstractQuestion getNextQuestion(){
+        int curr = currentQuestionNumber;
+        currentQuestionNumber +=1;
         score+=1;
+        if(curr < questionPool.size()){
+            return questionPool.get(currentQuestionNumber);
+        }
+        return  null;
     }
+
+    public void decreaseNumberOfLives(){
+        lives -= 1;
+        if(lives == 0){
+            finished = true;
+        }
+    }
+
 
 }
