@@ -2,7 +2,7 @@ package com.fer.ppij.what.database;
 
 import android.util.Log;
 
-import com.fer.ppij.what.database.model.Question;
+import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,12 +26,13 @@ public class FirebaseTest {
         // or FireBaseDatabase.getInstance.getReference("questions");
     }
 
-    private void writeTest(String qId) {
-        Question q = new Question();
-
-        mDatabase.child("questions").child(qId).setValue(q);
+    public void writeTest() {
+        MultipleChoiceQuestion mcq = new MultipleChoiceQuestion("Pitanje",
+                "Točan odgovor", "Točan odgovor", "Odgovor1", "Odgovor2", "Odgovor3");
+        String id = "PrvoPitanje";
+        mDatabase.child("questions").child(id).setValue(mcq);
         // updating a specific field
-        mDatabase.child("questions").child(qId).child("questionName").setValue("NewName");
+        // mDatabase.child("questions").child(qId).child("questionName").setValue("NewName");
     }
 
     private void readTest() {
@@ -39,7 +40,7 @@ public class FirebaseTest {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Question question = dataSnapshot.getValue(Question.class);
+                        //QuestionModel question = dataSnapshot.getValue(QuestionModel.class);
                         //...
                     }
 
