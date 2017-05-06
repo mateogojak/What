@@ -10,7 +10,7 @@ public class FillInQuestion extends AbstractQuestion {
 
     public FillInQuestion(){}
 
-    public FillInQuestion(String text, String correctAnswer){
-        super(text, correctAnswer);
+    public FillInQuestion(String text, String correctAnswer, String category){
+        super(text, correctAnswer, category);
     }
 }

@@ -15,8 +15,8 @@ public class MultipleChoiceQuestion extends AbstractQuestion {
 
     public MultipleChoiceQuestion(){}
 
-    public MultipleChoiceQuestion(String text, String correctAnswer, String... answers){
-        super(text, correctAnswer);
+    public MultipleChoiceQuestion(String text, String correctAnswer, String category, String... answers){
+        super(text, correctAnswer, category);
 
         for (String answer : answers) {
             this.answers.add(answer);
