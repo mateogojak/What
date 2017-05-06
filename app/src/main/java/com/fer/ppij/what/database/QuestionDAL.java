@@ -20,18 +20,15 @@ import static com.google.android.gms.internal.zzt.TAG;
 
 public class QuestionDAL {
 
-    private DatabaseReference mDatabase;
+    private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("questions");
 
-    public QuestionDAL() {
-        this.mDatabase = FirebaseDatabase.getInstance().getReference("questions");
-    }
+    public QuestionDAL() {}
 
-
-    public void createQuestion(String id, AbstractQuestion question){
+    public static void createQuestion(String id, AbstractQuestion question){
         mDatabase.child(id).setValue(question);
     }
 
-    public AbstractQuestion getQuestion(String id) {
+    public static AbstractQuestion getQuestion(String id) {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -47,7 +44,7 @@ public class QuestionDAL {
         return null;
     }
 
-    public List<AbstractQuestion> getQuestions(String category) {
+    public static List<AbstractQuestion> getQuestions(String category) {
         return Collections.emptyList();
     }
 
