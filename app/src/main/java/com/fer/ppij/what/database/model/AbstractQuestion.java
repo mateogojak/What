@@ -10,10 +10,11 @@ public abstract class AbstractQuestion {
 
     protected String text;
     protected String correctAnswer;
+    protected String category;
 
     protected AbstractQuestion() {}
 
-    protected AbstractQuestion(String text, String correctAnswer) {
+    protected AbstractQuestion(String text, String correctAnswer, String category) {
         this.text = text;
         this.correctAnswer = correctAnswer;
     }

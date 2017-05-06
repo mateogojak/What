@@ -14,8 +14,8 @@ public class ImageMultipleChoiceQuestion extends MultipleChoiceQuestion {
 
     public ImageMultipleChoiceQuestion() {}
 
-    public ImageMultipleChoiceQuestion(String text, String correctAnswer, File image, String... answers) {
-        super(text, correctAnswer, answers);
+    public ImageMultipleChoiceQuestion(String text, String correctAnswer, String category, File image, String... answers) {
+        super(text, correctAnswer, category, answers);
         this.image = image;
     }
 

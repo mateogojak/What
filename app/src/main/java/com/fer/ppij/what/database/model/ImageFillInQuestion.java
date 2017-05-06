@@ -14,8 +14,8 @@ public class ImageFillInQuestion extends FillInQuestion {
 
     public ImageFillInQuestion() {}
 
-    public ImageFillInQuestion(String text, String correctAnswer, File image) {
-        super(text, correctAnswer);
+    public ImageFillInQuestion(String text, String correctAnswer, String category, File image) {
+        super(text, correctAnswer, category);
         this.image = image;
     }
 
