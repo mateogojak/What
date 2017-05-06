@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -21,6 +23,22 @@ public class GameScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        //setUpTypeOfLayout
+        ImageView questImg = (ImageView)findViewById(R.id.questImage);
+        LinearLayout fourAnswerLay = (LinearLayout)findViewById(R.id.fourAnswerLayout);
+        LinearLayout addOnLay = (LinearLayout)findViewById(R.id.addonAnswer);
+        //TODO CHANGE THIS
+        boolean imageQuest=true;
+        boolean addOnQuest=true;
+        //TODO
+        if(imageQuest){
+            questImg.setVisibility(View.VISIBLE);
+        }
+        if(addOnQuest){
+            fourAnswerLay.setVisibility(View.GONE);
+            addOnLay.setVisibility(View.VISIBLE);
+        }
 
         questionDisplayTextView = (TextView) findViewById(R.id.questionTextView);
         answerA = (Button) findViewById(R.id.answerA);
