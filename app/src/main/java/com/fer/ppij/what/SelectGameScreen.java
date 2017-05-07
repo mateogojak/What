@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.FillInQuestion;
+import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 
 /**
  * Created by Mateo on 5/2/2017.
@@ -38,7 +39,10 @@ public class SelectGameScreen extends AppCompatActivity {
         super.onStart();
 
         nicknameDisplayTextView.setText(nickname);
-        QuestionDAL.createQuestion("prvo", new FillInQuestion("Filin", "Lijep", "povijest"));
+        QuestionDAL.createQuestion("prvo", new FillInQuestion("Filin1", "Lijep", "povijest"));
+        QuestionDAL.createQuestion("drugo", new FillInQuestion("Filin2", "Ružan", "povijest"));
+        QuestionDAL.createQuestion("prvo", new MultipleChoiceQuestion("Multiple1", "Lijep", "povijest", "Lijep", "Odgovor1", "Odgovor2", "Odgovor3"));
+        QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Multiple2", "Ružan", "povijest", "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
         goToGame1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

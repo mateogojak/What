@@ -1,6 +1,7 @@
 package com.fer.ppij.what.database.model;
 
 import com.fer.ppij.what.database.IQuestion;
+import com.fer.ppij.what.database.QuestionType;
 import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -10,22 +11,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class AbstractQuestion implements IQuestion {
 
-    public enum QuestionType {
-        MULTIPLE_CHOICE("multiple_choice"),
-        FILL_IN("fill_in"),
-        IMAGE_MULTIPLE_CHOICE("image_multiple_choice"),
-        IMAGE_FILL_IN("image_fill_in");
 
-        private String name;
-
-        QuestionType(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-    }
 
     protected String text;
     protected String correctAnswer;

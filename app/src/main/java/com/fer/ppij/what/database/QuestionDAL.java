@@ -8,7 +8,6 @@ import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -18,8 +17,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 /**
  * Created by antes on 6.5.2017..
@@ -33,7 +30,10 @@ public class QuestionDAL {
     public QuestionDAL() {}
 
     public static void createQuestion(String id, AbstractQuestion question){
-        mDatabase.child(question.getCategory()).child(id).setValue(question);
+        mDatabase.child(question.getCategory())
+                .child(question.getQuestionType())
+                .child(id)
+                .setValue(question);
     }
 
     private static void storeQuestionImage(String id, AbstractQuestion question) {

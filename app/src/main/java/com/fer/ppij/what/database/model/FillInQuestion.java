@@ -1,5 +1,6 @@
 package com.fer.ppij.what.database.model;
 
+import com.fer.ppij.what.database.QuestionType;
 import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 

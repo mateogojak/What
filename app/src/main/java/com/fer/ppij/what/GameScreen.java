@@ -2,7 +2,6 @@ package com.fer.ppij.what;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fer.ppij.what.database.QuestionDAL;
+import com.fer.ppij.what.database.QuestionType;
 import com.fer.ppij.what.database.model.AbstractQuestion;
 import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.ImageFillInQuestion;
@@ -24,9 +24,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Mateo on 5/2/2017.
@@ -38,6 +38,7 @@ public class GameScreen extends AppCompatActivity {
     private final String DEFAULT_BUTTONS_COLOR = "#ffffffff";
     private final String CORRECT_ANSWER_BUTTONS_COLOR = "#00ff00";
     private final String WRONG_ANSWER_BUTTONS_COLOR = "#ff0000";
+    private static final int NUMBER_OF_QUESTIONS = 10;
 
     private TextView questionDisplayTextView;
     private Button answerA, answerB, answerC, answerD, checkAnswerButton;
@@ -84,37 +85,40 @@ public class GameScreen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        QuestionDAL.getQuestions(gameName, 3, new ValueEventListener() {
+        QuestionDAL.getQuestions(gameName, 4, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<AbstractQuestion> questionPool = new ArrayList<AbstractQuestion>();
 
-                for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
+                getQuestionsForType(dataSnapshot, questionPool, QuestionType.FILL_IN);
+                getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_FILL_IN);
+                getQuestionsForType(dataSnapshot, questionPool, QuestionType.MULTIPLE_CHOICE);
+                getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_MULTIPLE_CHOICE);
 
-                    AbstractQuestion q;
-                    AbstractQuestion question;
-
-                    if(questionSnapshot.getValue(MultipleChoiceQuestion.class) != null){
-                        question = questionSnapshot.getValue(MultipleChoiceQuestion.class);
-                    }
-                    else if(questionSnapshot.getValue(ImageMultipleChoiceQuestion.class) != null){
-                        question = questionSnapshot.getValue(ImageMultipleChoiceQuestion.class);
-                    }
-                    else if(questionSnapshot.getValue(FillInQuestion.class) != null){
-                        question = questionSnapshot.getValue(FillInQuestion.class);
-                    }
-                    //(q.getQuestionType().equals(AbstractQuestion.QuestionType.IMAGE_FILL_IN))
-                    else{
-                        question = questionSnapshot.getValue(ImageFillInQuestion.class);
-                    }
-
-
-                    //Log.d("TAG",q.toString());
-                    questionPool.add(question);
-                    //TODO shuffle
-                }
-                game = new Game(gameName,questionPool,NUMBER_OF_LIFES);
+                Collections.shuffle(questionPool);
+                // slice only first 10 questions for the game
+//                questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
+                game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
                 displayNextQuestion();
+            }
+
+            private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
+                for(DataSnapshot questionSnapshot : dataSnapshot.child(type.getName()).getChildren()) {
+                    switch (type) {
+                        case FILL_IN:
+                            questionPool.add(questionSnapshot.getValue(FillInQuestion.class));
+                            break;
+                        case IMAGE_FILL_IN:
+                            questionPool.add(questionSnapshot.getValue(ImageFillInQuestion.class));
+                            break;
+                        case MULTIPLE_CHOICE:
+                            questionPool.add(questionSnapshot.getValue(MultipleChoiceQuestion.class));
+                            break;
+                        case IMAGE_MULTIPLE_CHOICE:
+                            questionPool.add(questionSnapshot.getValue(ImageMultipleChoiceQuestion.class));
+                            break;
+                    }
+                }
             }
 
             @Override
