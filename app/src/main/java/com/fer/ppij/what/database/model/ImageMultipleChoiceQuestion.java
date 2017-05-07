@@ -1,5 +1,6 @@
 package com.fer.ppij.what.database.model;
 
+import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.File;
@@ -25,5 +26,10 @@ public class ImageMultipleChoiceQuestion extends MultipleChoiceQuestion {
 
     public void setImage(File image) {
         this.image = image;
+    }
+
+    @Override
+    public void accept(QuestionVisitor questionVisitor) {
+        questionVisitor.visit(this);
     }
 }

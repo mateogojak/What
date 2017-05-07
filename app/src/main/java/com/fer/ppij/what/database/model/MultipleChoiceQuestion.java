@@ -1,5 +1,6 @@
 package com.fer.ppij.what.database.model;
 
+import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
@@ -16,7 +17,12 @@ public class MultipleChoiceQuestion extends AbstractQuestion {
     public MultipleChoiceQuestion(){}
 
     public MultipleChoiceQuestion(String text, String correctAnswer, String category, String... answers){
-        super(text, correctAnswer, category);
+        this(text,correctAnswer, category, false, answers);
+    }
+
+    protected MultipleChoiceQuestion(String text, String correctAnswer, String category, boolean hasImage,
+                                     String... answers) {
+        super(text, correctAnswer, category, (hasImage? QuestionType.IMAGE_MULTIPLE_CHOICE : QuestionType.MULTIPLE_CHOICE));
 
         for (String answer : answers) {
             this.answers.add(answer);
@@ -30,4 +36,10 @@ public class MultipleChoiceQuestion extends AbstractQuestion {
     public void setAnswers(List<String> answers) {
         this.answers = answers;
     }
+
+    @Override
+    public void accept(QuestionVisitor questionVisitor) {
+        questionVisitor.visit(this);
+    }
+
 }

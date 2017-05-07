@@ -1,5 +1,6 @@
 package com.fer.ppij.what.database.model;
 
+import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.File;
@@ -15,7 +16,7 @@ public class ImageFillInQuestion extends FillInQuestion {
     public ImageFillInQuestion() {}
 
     public ImageFillInQuestion(String text, String correctAnswer, String category, File image) {
-        super(text, correctAnswer, category);
+        super(text, correctAnswer, category, true);
         this.image = image;
     }
 
@@ -25,5 +26,10 @@ public class ImageFillInQuestion extends FillInQuestion {
 
     public void setImage(File image) {
         this.image = image;
+    }
+
+    @Override
+    public void accept(QuestionVisitor questionVisitor) {
+        questionVisitor.visit(this);
     }
 }
