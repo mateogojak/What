@@ -123,8 +123,7 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void manageQuestions(Question question){
-        //a
-
+        
         questionDisplayTextView.setText(question.getQuestionText());
         answerA.setText(question.getCorrectAnswer());
         answerB.setText(question.getIncorrectAnswer1());
