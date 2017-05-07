@@ -84,15 +84,34 @@ public class GameScreen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        QuestionDAL.getQuestions(gameName, 1, new ValueEventListener() {
+        QuestionDAL.getQuestions(gameName, 3, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<AbstractQuestion> questionPool = new ArrayList<AbstractQuestion>();
 
                 for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
-                    AbstractQuestion q = questionSnapshot.getValue(MultipleChoiceQuestion.class);
-                    Log.d("TAG",q.toString());
-                    questionPool.add(q);
+
+                    AbstractQuestion q;
+                    AbstractQuestion question;
+
+                    if(questionSnapshot.getValue(MultipleChoiceQuestion.class) != null){
+                        question = questionSnapshot.getValue(MultipleChoiceQuestion.class);
+                    }
+                    else if(questionSnapshot.getValue(ImageMultipleChoiceQuestion.class) != null){
+                        question = questionSnapshot.getValue(ImageMultipleChoiceQuestion.class);
+                    }
+                    else if(questionSnapshot.getValue(FillInQuestion.class) != null){
+                        question = questionSnapshot.getValue(FillInQuestion.class);
+                    }
+                    //(q.getQuestionType().equals(AbstractQuestion.QuestionType.IMAGE_FILL_IN))
+                    else{
+                        question = questionSnapshot.getValue(ImageFillInQuestion.class);
+                    }
+
+
+                    //Log.d("TAG",q.toString());
+                    questionPool.add(question);
+                    //TODO shuffle
                 }
                 game = new Game(gameName,questionPool,NUMBER_OF_LIFES);
                 displayNextQuestion();
@@ -167,7 +186,7 @@ public class GameScreen extends AppCompatActivity {
         if(question instanceof ImageMultipleChoiceQuestion){
             Log.d("LOG","1111111111111111111111111");
             setDisplayVisibility(View.VISIBLE,View.VISIBLE,View.GONE);
-            displayFillInQuestionWithImage((ImageFillInQuestion) question);
+            displayMultipleChoiceWithImage((ImageMultipleChoiceQuestion) question);
         }
         else if(question instanceof MultipleChoiceQuestion){
             Log.d("LOG","2222222222222222222222");

@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fer.ppij.what.database.QuestionDAL;
+import com.fer.ppij.what.database.model.FillInQuestion;
+
 /**
  * Created by Mateo on 5/2/2017.
  */
@@ -35,7 +38,7 @@ public class SelectGameScreen extends AppCompatActivity {
         super.onStart();
 
         nicknameDisplayTextView.setText(nickname);
-
+        QuestionDAL.createQuestion("prvo", new FillInQuestion("Filin", "Lijep", "povijest"));
         goToGame1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

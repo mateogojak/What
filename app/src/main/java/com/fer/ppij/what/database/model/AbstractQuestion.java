@@ -10,7 +10,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class AbstractQuestion implements IQuestion {
 
-    protected enum QuestionType {
+    public enum QuestionType {
         MULTIPLE_CHOICE("multiple_choice"),
         FILL_IN("fill_in"),
         IMAGE_MULTIPLE_CHOICE("image_multiple_choice"),
