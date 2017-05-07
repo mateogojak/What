@@ -59,7 +59,10 @@ public class Game {
         if(curr < questionPool.size()) {
             return questionPool.get(curr);
         }
-        return null;
+        else {
+            currentQuestionNumber = 1;
+            return questionPool.get(0);
+        }
     }
 
     public void decreaseNumberOfLives(){

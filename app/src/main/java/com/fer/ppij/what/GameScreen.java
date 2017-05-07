@@ -1,5 +1,6 @@
 package com.fer.ppij.what;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,7 +40,7 @@ import java.util.Random;
 public class GameScreen extends AppCompatActivity {
 
     private final int NUMBER_OF_LIFES = 2;
-    private final String DEFAULT_BUTTONS_COLOR = "#ffffffff";
+    private final String DEFAULT_BUTTONS_COLOR = "#d3d3d3";
     private final String CORRECT_ANSWER_BUTTONS_COLOR = "#00ff00";
     private final String WRONG_ANSWER_BUTTONS_COLOR = "#ff0000";
     private static final int NUMBER_OF_QUESTIONS = 10;
@@ -78,7 +80,7 @@ public class GameScreen extends AppCompatActivity {
         answerD = (Button) findViewById(R.id.answerD);
         checkAnswerButton = (Button)findViewById(R.id.check_answer_button);
         buttonContinue = (Button)findViewById(R.id.button_continue);
-        fillInButtonContinue = (Button)findViewById(R.id.fill_in_button_continue);
+        //fillInButtonContinue = (Button)findViewById(R.id.fill_in_button_continue);
 
     }
 
@@ -253,8 +255,8 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public boolean checkAnswer(String answer){
-        String correctAnswer = currentQuestion.getCorrectAnswer();
-        if(correctAnswer.equals(answer)){
+        String correctAnswer = currentQuestion.getCorrectAnswer().toUpperCase();
+        if(correctAnswer.equals(answer.toUpperCase())){
             return true;
         }
         else{
@@ -262,7 +264,14 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
-    public Button getCorrencAnswerButton(){
+
+    public void hideSoftKeyboard() {
+
+        InputMethodManager inputMethodManager = (InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public Button getCorrectAnswerButton(){
         if(checkAnswer(answerA.getText().toString())){
             return answerA;
         }
@@ -278,12 +287,12 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void colorizeButtons(Button choosenButton){
-        if(choosenButton == getCorrencAnswerButton()){
+        if(choosenButton == getCorrectAnswerButton()){
             choosenButton.setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
         }
         else {
             choosenButton.setBackgroundColor(Color.parseColor(WRONG_ANSWER_BUTTONS_COLOR));
-            getCorrencAnswerButton().setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
+            getCorrectAnswerButton().setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
         }
     }
 
@@ -333,4 +342,35 @@ public class GameScreen extends AppCompatActivity {
         }
 
     }
+
+    public void onCheckAnswerButtonClick(View view) {
+        fillEditText.clearFocus();
+        hideSoftKeyboard();
+
+        if(answered == false) {
+            answered = true;
+            checkAnswerButton.setText("NASTAVI");
+            if (checkAnswer(fillEditText.getText().toString())) {
+                fillEditText.setTextColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
+            }
+            else {
+                game.decreaseNumberOfLives();
+                fillEditText.setTextColor(Color.parseColor(WRONG_ANSWER_BUTTONS_COLOR));
+            }
+        }
+        else {
+            if(game.isFinished()){
+                LoadEndScreen();
+            }
+            else {
+                checkAnswerButton.setText("POTVRDI ODGOVOR");
+                answered = false;
+                fillEditText.setText("");
+                fillEditText.setTextColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
+                displayNextQuestion();
+            }
+        }
+
+    }
+
 }
