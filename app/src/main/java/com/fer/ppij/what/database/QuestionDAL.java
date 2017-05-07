@@ -62,7 +62,7 @@ public class QuestionDAL {
                 }
             });
         } catch (IOException e) {
-            LOG.d(e, "Puce exception prilikom dohvatanja");
+            //LOG.d(e, "Puce exception prilikom dohvatanja");
         }
 
     }
@@ -82,8 +82,9 @@ public class QuestionDAL {
 //        });
     }
 
-    public static void getQuestions(String category, int numberOfQuestions, ChildEventListener childEventListener) {
-        mDatabase.child(category).limitToFirst(numberOfQuestions).addChildEventListener(childEventListener);
+    public static void getQuestions(String category, int numberOfQuestions, ValueEventListener valueEventListener) {
+        //mDatabase.child(category).limitToFirst(numberOfQuestions).addChildEventListener(childEventListener);
+        mDatabase.child(category).limitToFirst(numberOfQuestions).addValueEventListener(valueEventListener);
     }
 
 }

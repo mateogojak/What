@@ -1,8 +1,10 @@
 package com.fer.ppij.what;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,14 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.AbstractQuestion;
 import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
 import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Mateo on 5/2/2017.
@@ -44,7 +51,7 @@ public class GameScreen extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         gameName = getIntent().getStringExtra("gameName");
 
-        game = new Game(gameName,nickname,3);
+
 
         questionImage = (ImageView)findViewById(R.id.questImage);
         multipleAnswerLayout = (LinearLayout)findViewById(R.id.fourAnswerLayout);
@@ -64,21 +71,21 @@ public class GameScreen extends AppCompatActivity {
         super.onStart();
 
         //Question question = new Question("Koje je pitanje?", "Odgovor", "Odgovor drugi", "Odgovor treci", "Odgovor cetvrti");
+        List<AbstractQuestion> questionPool = null;
+        try {
+            questionPool = new GetQuestionTask().execute(gameName).get();
 
-        displayNextQuestion();
-
-
-
-
-      /*  answerA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GameScreen.this, EndScreen.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-*/
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if(questionPool != null) {
+            game = new Game(gameName,questionPool,3);
+            displayNextQuestion();
+        } else {
+            Log.d("GOOVNO","aj u kurac");
+        }
 
     }
 
@@ -231,5 +238,29 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void OnAnswerDClick(View view) {
+    }
+
+    private class GetQuestionTask extends AsyncTask<String,Integer,List<AbstractQuestion>>{
+
+        private List<AbstractQuestion> questionPool;
+
+        @Override
+        protected List<AbstractQuestion> doInBackground(String... params) {
+
+            QuestionDAL.getQuestions(params[0], 5, new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
+                        questionPool.add(questionSnapshot.getValue(AbstractQuestion.class));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            return questionPool;
+        }
     }
 }

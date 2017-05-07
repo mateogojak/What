@@ -2,6 +2,10 @@ package com.fer.ppij.what;
 
 import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.AbstractQuestion;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -13,6 +17,8 @@ public class Game {
 
     private int score = 0;
     private String category;
+
+    //TODO makni nick
     private String nick;
     private int currentQuestionNumber = 0;
     private List<AbstractQuestion> questionPool;
@@ -23,14 +29,11 @@ public class Game {
         return questionPool;
     }
 
-    public Game(String category, String nick, int wrongAnswers) {
+    public Game(String category,List<AbstractQuestion> questionPool,int wrongAnswers) {
         this.category = category;
-        this.nick = nick;
-        //TODO callback
-        this.questionPool = QuestionDAL.getQuestions(category);
+        this.questionPool=questionPool;
         this.lives = wrongAnswers;
     }
-
 
     public int getScore() {
         return score;
@@ -52,10 +55,13 @@ public class Game {
         int curr = currentQuestionNumber;
         currentQuestionNumber +=1;
         score+=1;
-        if(curr < questionPool.size()){
+        if(curr < questionPool.size()) {
             return questionPool.get(currentQuestionNumber);
         }
-        return  null;
+        else {
+            currentQuestionNumber=0;
+            return getNextQuestion();
+        }
     }
 
     public void decreaseNumberOfLives(){
