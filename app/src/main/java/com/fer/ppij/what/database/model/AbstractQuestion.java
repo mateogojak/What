@@ -6,7 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
  * Created by antes on 6.5.2017..
  */
 @IgnoreExtraProperties
-public abstract class AbstractQuestion {
+public class AbstractQuestion {
 
     protected String text;
     protected String correctAnswer;

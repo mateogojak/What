@@ -1,6 +1,7 @@
 package com.fer.ppij.what;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -32,8 +34,15 @@ import java.util.concurrent.ExecutionException;
 
 public class GameScreen extends AppCompatActivity {
 
+    private final int NUMBER_OF_LIFES = 2;
+    private final String DEFAULT_BUTTONS_COLOR = "#ffffffff";
+    private final String CORRECT_ANSWER_BUTTONS_COLOR = "#00ff00";
+    private final String WRONG_ANSWER_BUTTONS_COLOR = "#ff0000";
+
     private TextView questionDisplayTextView;
     private Button answerA, answerB, answerC, answerD, checkAnswerButton;
+
+    private Button buttonContinue,fillInButtonContinue;
 
     private  ImageView questionImage;
     private  LinearLayout multipleAnswerLayout;
@@ -43,6 +52,8 @@ public class GameScreen extends AppCompatActivity {
     private String nickname,gameName;
     Game game;
     AbstractQuestion currentQuestion;
+
+    boolean answered = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +66,7 @@ public class GameScreen extends AppCompatActivity {
 
         questionImage = (ImageView)findViewById(R.id.questImage);
         multipleAnswerLayout = (LinearLayout)findViewById(R.id.fourAnswerLayout);
-        fillAnswerLayout = (LinearLayout)findViewById(R.id.addonAnswer);
+        fillAnswerLayout = (LinearLayout)findViewById(R.id.fill_in_answe_lay);
         fillEditText = (EditText)findViewById(R.id.fill_edit_text);
 
         questionDisplayTextView = (TextView) findViewById(R.id.questionTextView);
@@ -64,28 +75,34 @@ public class GameScreen extends AppCompatActivity {
         answerC = (Button) findViewById(R.id.answerC);
         answerD = (Button) findViewById(R.id.answerD);
         checkAnswerButton = (Button)findViewById(R.id.check_answer_button);
+        buttonContinue = (Button)findViewById(R.id.button_continue);
+        fillInButtonContinue = (Button)findViewById(R.id.fill_in_button_continue);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        //Question question = new Question("Koje je pitanje?", "Odgovor", "Odgovor drugi", "Odgovor treci", "Odgovor cetvrti");
-        List<AbstractQuestion> questionPool = null;
-        try {
-            questionPool = new GetQuestionTask().execute(gameName).get();
+        QuestionDAL.getQuestions(gameName, 1, new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<AbstractQuestion> questionPool = new ArrayList<AbstractQuestion>();
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if(questionPool != null) {
-            game = new Game(gameName,questionPool,3);
-            displayNextQuestion();
-        } else {
-            Log.d("GOOVNO","aj u kurac");
-        }
+                for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
+                    AbstractQuestion q = questionSnapshot.getValue(MultipleChoiceQuestion.class);
+                    Log.d("TAG",q.toString());
+                    questionPool.add(q);
+                }
+                game = new Game(gameName,questionPool,NUMBER_OF_LIFES);
+                displayNextQuestion();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -109,7 +126,7 @@ public class GameScreen extends AppCompatActivity {
         for(int i=0;i<4;i++){
             if(a != i && b!= i && c!= i){
                 d=i;
-                return;
+                break;
             }
         }
 
@@ -138,23 +155,32 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayNextQuestion(){
         AbstractQuestion question = game.getNextQuestion();
-        if(question == null) return;
+
+
+        if(question == null) {
+            Log.d("LOG","nema pitanja");
+            return;
+        }
 
         currentQuestion = question;
 
         if(question instanceof ImageMultipleChoiceQuestion){
+            Log.d("LOG","1111111111111111111111111");
             setDisplayVisibility(View.VISIBLE,View.VISIBLE,View.GONE);
             displayFillInQuestionWithImage((ImageFillInQuestion) question);
         }
         else if(question instanceof MultipleChoiceQuestion){
+            Log.d("LOG","2222222222222222222222");
             setDisplayVisibility(View.GONE,View.VISIBLE,View.GONE);
             displayMultipleQuestion((MultipleChoiceQuestion)question);
         }
         else if(question instanceof ImageFillInQuestion){
+            Log.d("LOG","33333333333333333333333333");
             setDisplayVisibility(View.VISIBLE,View.GONE,View.VISIBLE);
             displayFillInQuestionWithImage((ImageFillInQuestion)question);
         }
         else if(question instanceof FillInQuestion){
+            Log.d("LOG","4444444444444444");
             setDisplayVisibility(View.GONE,View.GONE,View.VISIBLE);
             displayFillInQuestion((FillInQuestion)question);
         }
@@ -203,64 +229,58 @@ public class GameScreen extends AppCompatActivity {
 
     public void colorizeButtons(Button choosenButton){
         if(choosenButton == getCorrencAnswerButton()){
-            //TODO obojaj ga u zeleno
-            return;
+            choosenButton.setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
         }
         else {
-            //TODO jos bojanja
-            //obojaj ga u crveno
-            //getCorrencAnswerButton() obojaj u zeleno
+            choosenButton.setBackgroundColor(Color.parseColor(WRONG_ANSWER_BUTTONS_COLOR));
+            getCorrencAnswerButton().setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
         }
+    }
+
+    public void decolorizeButtons(){
+        answerA.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
+        answerB.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
+        answerC.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
+        answerD.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
+    }
+
+    public void handleMultipleAnswerButtonClick(Button button){
+        if(answered == false) {
+            answered = true;
+            colorizeButtons(button);
+            buttonContinue.setVisibility(View.VISIBLE);
+            if (checkAnswer(button.getText().toString()) == false) {
+                game.decreaseNumberOfLives();
+            }
+        }
+
     }
 
     public void OnAnswerAClick(View view) {
-        colorizeButtons(answerA);
-        if(checkAnswer(answerA.getText().toString())){
-            //TODO dodaj novi botun za dalje koji poziva displayNextQuestion()
-        }
-        else {
-            game.decreaseNumberOfLives();
-            if(game.isFinished()){
-                //pricekaj malo
-                LoadEndScreen();
-            }
-            else {
-                //dodaj botun za dalje
-            }
-        }
+       handleMultipleAnswerButtonClick(answerA);
     }
 
     public void OnAnswerBClick(View view) {
-        //TODO iskopiraj prethodne botune
+        handleMultipleAnswerButtonClick(answerB);
     }
 
     public void OnAnswerCClick(View view) {
+        handleMultipleAnswerButtonClick(answerC);
     }
 
     public void OnAnswerDClick(View view) {
+        handleMultipleAnswerButtonClick(answerD);
     }
 
-    private class GetQuestionTask extends AsyncTask<String,Integer,List<AbstractQuestion>>{
-
-        private List<AbstractQuestion> questionPool;
-
-        @Override
-        protected List<AbstractQuestion> doInBackground(String... params) {
-
-            QuestionDAL.getQuestions(params[0], 5, new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
-                        questionPool.add(questionSnapshot.getValue(AbstractQuestion.class));
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            return questionPool;
+    public void OnContinueButtonClick(View view) {
+        if(game.isFinished()){
+            LoadEndScreen();
         }
+        else {
+            answered = false;
+            decolorizeButtons();
+            displayNextQuestion();
+        }
+
     }
 }
