@@ -1,13 +1,14 @@
 package com.fer.ppij.what.database.model;
 
 import com.fer.ppij.what.database.IQuestion;
+import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * Created by antes on 6.5.2017..
  */
 @IgnoreExtraProperties
-public abstract class AbstractQuestion implements IQuestion {
+public class AbstractQuestion implements IQuestion {
 
     protected enum QuestionType {
         MULTIPLE_CHOICE("multiple_choice"),
@@ -84,5 +85,10 @@ public abstract class AbstractQuestion implements IQuestion {
 
     public void setHasImage(boolean hasImage) {
         this.hasImage = hasImage;
+    }
+
+    @Override
+    public void accept(QuestionVisitor questionVisitor) {
+        questionVisitor.visit(this);
     }
 }

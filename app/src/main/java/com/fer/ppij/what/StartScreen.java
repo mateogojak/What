@@ -36,9 +36,6 @@ public class StartScreen extends AppCompatActivity {
         goToGameSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AbstractQuestion q = new MultipleChoiceQuestion("Pitanje2", "Točan odg", "povijest", "Točan odg", "Odgovor1", "Odgovor2", "Odgovor3");
-                QuestionDAL.createQuestion("treće", q);
-
                 nickname = nicknameInputField.getText().toString();
 
                 Intent intent = new Intent(StartScreen.this, SelectGameScreen.class);

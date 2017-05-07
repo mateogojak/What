@@ -1,5 +1,6 @@
 package com.fer.ppij.what.database;
 
+import com.fer.ppij.what.database.model.AbstractQuestion;
 import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
@@ -14,4 +15,5 @@ public interface QuestionVisitor {
     void visit(ImageMultipleChoiceQuestion imageMultipleChoiceQuestion);
     void visit(FillInQuestion fillInQuestion);
     void visit(ImageFillInQuestion imageFillInQuestion);
+    void visit(AbstractQuestion abstractQuestion);
 }
