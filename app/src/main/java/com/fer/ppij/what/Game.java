@@ -2,6 +2,7 @@ package com.fer.ppij.what;
 
 import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.AbstractQuestion;
+import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +30,7 @@ public class Game {
         return questionPool;
     }
 
-    public Game(String category,List<AbstractQuestion> questionPool,int wrongAnswers) {
+    public Game(String category, List<AbstractQuestion> questionPool, int wrongAnswers) {
         this.category = category;
         this.questionPool=questionPool;
         this.lives = wrongAnswers;
@@ -56,12 +57,9 @@ public class Game {
         currentQuestionNumber +=1;
         score+=1;
         if(curr < questionPool.size()) {
-            return questionPool.get(currentQuestionNumber);
+            return questionPool.get(curr);
         }
-        else {
-            currentQuestionNumber=0;
-            return getNextQuestion();
-        }
+        return null;
     }
 
     public void decreaseNumberOfLives(){
