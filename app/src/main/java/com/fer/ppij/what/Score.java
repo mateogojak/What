@@ -6,6 +6,18 @@ package com.fer.ppij.what;
 
 public class Score {
 
+    private int score = 0;
 
-    //radi
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void increaseScore(){this.score+=1;}
+
+
+
 }
