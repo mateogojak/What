@@ -47,6 +47,8 @@ public class SelectGameScreen extends AppCompatActivity {
         super.onStart();
 
         nicknameDisplayTextView.setText(nickname);
+
+        //TODO: Questions for testing, delete after
         QuestionDAL.createQuestion("prvo", new FillInQuestion("Filin1", "Lijep", "povijest"));
         QuestionDAL.createQuestion("drugo", new FillInQuestion("Filin2", "Ružan", "povijest"));
         QuestionDAL.createQuestion("prvo", new MultipleChoiceQuestion("Multiple1", "Lijep", "povijest", "Lijep", "Odgovor1", "Odgovor2", "Odgovor3"));
@@ -54,8 +56,8 @@ public class SelectGameScreen extends AppCompatActivity {
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.europe);
 
-        QuestionDAL.storeQuestionImage("prvo_fill_in", new ImageFillInQuestion("Filin1", "Lijep", "povijest", bm));
-        QuestionDAL.storeQuestionImage("prvo_multiple", new ImageMultipleChoiceQuestion("Multiple2", "Ružan", "povijest",
+        QuestionDAL.createQuestion("prvo_fill_in", new ImageFillInQuestion("ImageFilin1", "Lijep", "povijest", bm));
+        QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
                 bm,"Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
 
         goToGame1.setOnClickListener(new View.OnClickListener() {

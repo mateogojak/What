@@ -10,6 +10,8 @@ import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -33,26 +35,28 @@ public class QuestionDAL {
 
     public QuestionDAL() {}
 
-    public static void createQuestion(String id, AbstractQuestion question){
+    public static void createQuestion(final String id, final AbstractQuestion question){
+        if(question instanceof ImageFillInQuestion || question instanceof ImageMultipleChoiceQuestion) {
+            storeQuestionImage(id, question);
+        }
         mDatabase.child(question.getCategory())
                 .child(question.getQuestionType())
                 .child(id)
                 .setValue(question);
+
     }
 
-    public static void storeQuestionImage(String id, AbstractQuestion question) {
+    public static void storeQuestionImage(final String id, final AbstractQuestion question) {
         Bitmap bitmap = null;
         if(question instanceof ImageMultipleChoiceQuestion) {
             bitmap = ((ImageMultipleChoiceQuestion)question).getImage();
         } else if (question instanceof ImageFillInQuestion) {
             bitmap = ((ImageFillInQuestion)question).getImage();
         }
-
         if (bitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
             byte[] data = baos.toByteArray();
-            //UploadTask uploadTask = mountainsRef.putBytes(data);
             mStorage.child(id + ".jpg").putBytes(data);
         }
     }
