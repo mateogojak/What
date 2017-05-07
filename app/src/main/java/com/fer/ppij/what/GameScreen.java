@@ -1,6 +1,8 @@
 package com.fer.ppij.what;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
 import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -62,8 +65,6 @@ public class GameScreen extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         nickname = getIntent().getStringExtra("nickname");
         gameName = getIntent().getStringExtra("gameName");
-
-
 
         questionImage = (ImageView)findViewById(R.id.questImage);
         multipleAnswerLayout = (LinearLayout)findViewById(R.id.fourAnswerLayout);
@@ -109,13 +110,39 @@ public class GameScreen extends AppCompatActivity {
                             questionPool.add(questionSnapshot.getValue(FillInQuestion.class));
                             break;
                         case IMAGE_FILL_IN:
-                            questionPool.add(questionSnapshot.getValue(ImageFillInQuestion.class));
+                            ImageFillInQuestion imf = questionSnapshot.getValue(ImageFillInQuestion.class);
+                            QuestionDAL.getQuestionImage("prvo", imf, new OnSuccessListener<byte[]>() {
+                                private ImageFillInQuestion imf;
+                                private OnSuccessListener<byte[]> init(ImageFillInQuestion imf) {
+                                    this.imf = imf;
+                                    return this;
+                                }
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    imf.setImage(bitmap);
+                                }
+                            }.init(imf));
+                            questionPool.add(imf);
                             break;
                         case MULTIPLE_CHOICE:
                             questionPool.add(questionSnapshot.getValue(MultipleChoiceQuestion.class));
                             break;
                         case IMAGE_MULTIPLE_CHOICE:
-                            questionPool.add(questionSnapshot.getValue(ImageMultipleChoiceQuestion.class));
+                            ImageMultipleChoiceQuestion imc = questionSnapshot.getValue(ImageMultipleChoiceQuestion.class);
+                            QuestionDAL.getQuestionImage("prvo", imc, new OnSuccessListener<byte[]>() {
+                                private ImageMultipleChoiceQuestion imc;
+                                private OnSuccessListener<byte[]> init(ImageMultipleChoiceQuestion imc) {
+                                    this.imc = imc;
+                                    return this;
+                                }
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    imc.setImage(bitmap);
+                                }
+                            }.init(imc));
+                            questionPool.add(imc);
                             break;
                     }
                 }

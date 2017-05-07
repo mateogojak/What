@@ -1,5 +1,7 @@
 package com.fer.ppij.what.database.model;
 
+import android.graphics.Bitmap;
+
 import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -11,20 +13,20 @@ import java.io.File;
 @IgnoreExtraProperties
 public class ImageFillInQuestion extends FillInQuestion {
 
-    private File image;
+    private Bitmap image;
 
     public ImageFillInQuestion() {}
 
-    public ImageFillInQuestion(String text, String correctAnswer, String category, File image) {
+    public ImageFillInQuestion(String text, String correctAnswer, String category, Bitmap image) {
         super(text, correctAnswer, category, true);
         this.image = image;
     }
 
-    public File getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 

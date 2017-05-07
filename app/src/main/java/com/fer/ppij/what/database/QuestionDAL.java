@@ -1,5 +1,7 @@
 package com.fer.ppij.what.database;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
@@ -14,7 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,35 +40,28 @@ public class QuestionDAL {
                 .setValue(question);
     }
 
-    private static void storeQuestionImage(String id, AbstractQuestion question) {
-        File f = null;
+    public static void storeQuestionImage(String id, AbstractQuestion question) {
+        Bitmap bitmap = null;
         if(question instanceof ImageMultipleChoiceQuestion) {
-            f = ((ImageMultipleChoiceQuestion)question).getImage();
+            bitmap = ((ImageMultipleChoiceQuestion)question).getImage();
         } else if (question instanceof ImageFillInQuestion) {
-            f = ((ImageFillInQuestion)question).getImage();
+            bitmap = ((ImageFillInQuestion)question).getImage();
         }
-        mStorage.child(id + ".jpg").putFile(Uri.fromFile(f));
+
+        if (bitmap != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+            byte[] data = baos.toByteArray();
+            //UploadTask uploadTask = mountainsRef.putBytes(data);
+            mStorage.child(id + ".jpg").putBytes(data);
+        }
     }
 
-    private static void getQuestionImage(String id) {
-        try {
-            File localFile = File.createTempFile("images", "jpg");
+    public static void getQuestionImage(String id, final AbstractQuestion question, OnSuccessListener<byte[]> onSuccessListener) {
+        boolean isMultiple = question.getQuestionType().contains("multiple");
 
-            mStorage.child(id).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    // Local temp file has been created
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
-        } catch (IOException e) {
-            //LOG.d(e, "Puce exception prilikom dohvatanja");
-        }
-
+        mStorage.child(id + (isMultiple ? "_multiple" : "fill_in") + ".jpg").getBytes(Long.MAX_VALUE)
+        .addOnSuccessListener(onSuccessListener);
     }
 
     public static void getQuestion(String category, String id, ValueEventListener valueEventListener) {

@@ -1,5 +1,7 @@
 package com.fer.ppij.what.database.model;
 
+import android.graphics.Bitmap;
+
 import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -11,20 +13,20 @@ import java.io.File;
 @IgnoreExtraProperties
 public class ImageMultipleChoiceQuestion extends MultipleChoiceQuestion {
 
-    private File image;
+    private Bitmap image;
 
     public ImageMultipleChoiceQuestion() {}
 
-    public ImageMultipleChoiceQuestion(String text, String correctAnswer, String category, File image, String... answers) {
+    public ImageMultipleChoiceQuestion(String text, String correctAnswer, String category, Bitmap image, String... answers) {
         super(text, correctAnswer, category, answers);
         this.image = image;
     }
 
-    public File getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
