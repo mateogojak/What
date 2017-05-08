@@ -191,8 +191,7 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayMultipleChoiceWithImage(ImageMultipleChoiceQuestion question){
         displayMultipleQuestion(question);
-        //TODO namistit izvor slike
-        //questionImage.setBackground(question.getImage());
+        questionImage.setImageBitmap(question.getImage());
     }
 
     public void displayFillInQuestion(FillInQuestion question){
@@ -201,8 +200,7 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayFillInQuestionWithImage(ImageFillInQuestion question){
         displayFillInQuestion(question);
-        //TODO namistit izvor slike
-        //questionImage.setImageBitmap();
+        questionImage.setImageBitmap(question.getImage());
     }
 
     public void displayNextQuestion(){
