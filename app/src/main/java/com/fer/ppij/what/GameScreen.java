@@ -256,14 +256,8 @@ public class GameScreen extends AppCompatActivity {
 
     public boolean checkAnswer(String answer){
         String correctAnswer = currentQuestion.getCorrectAnswer().toUpperCase();
-        if(correctAnswer.equals(answer.toUpperCase())){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return correctAnswer.equals(answer.toUpperCase());
     }
-
 
     public void hideSoftKeyboard() {
 
