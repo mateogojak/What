@@ -362,7 +362,6 @@ public class GameScreen extends AppCompatActivity {
                 displayNextQuestion();
             }
         }
-
     }
 
 }
