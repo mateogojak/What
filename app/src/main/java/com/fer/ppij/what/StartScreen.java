@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.fer.ppij.what.database.FirebaseTest;
+import com.fer.ppij.what.database.QuestionDAL;
+import com.fer.ppij.what.database.model.AbstractQuestion;
+import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
+
 /**
  * Created by Mateo on 5/2/2017.
  */
@@ -46,11 +51,9 @@ public class StartScreen extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         goToGameSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 nickname = nicknameInputField.getText().toString();
 
                 SharedPreferences.Editor e = myPrefs.edit();
