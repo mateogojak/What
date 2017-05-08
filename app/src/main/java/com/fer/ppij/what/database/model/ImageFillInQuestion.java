@@ -3,6 +3,7 @@ package com.fer.ppij.what.database.model;
 import android.graphics.Bitmap;
 
 import com.fer.ppij.what.database.QuestionVisitor;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.File;
@@ -22,6 +23,7 @@ public class ImageFillInQuestion extends FillInQuestion {
         this.image = image;
     }
 
+    @Exclude
     public Bitmap getImage() {
         return image;
     }
