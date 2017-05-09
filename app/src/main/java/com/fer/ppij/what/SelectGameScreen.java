@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fer.ppij.what.database.QuestionDAL;
@@ -18,6 +19,7 @@ import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by Mateo on 5/2/2017.
@@ -27,7 +29,8 @@ public class SelectGameScreen extends AppCompatActivity {
 
     private String nickname;
     private TextView nicknameDisplayTextView;
-    private Button goToGame1, goToGame2,goToGame3,goToGame4;
+    private Button goToGame1, goToGame2,goToGame3,goToGame4, goToRoom, createRoom;
+    private EditText roomNameEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,11 @@ public class SelectGameScreen extends AppCompatActivity {
         goToGame2 = (Button) findViewById(R.id.selectGame2);
         goToGame3 = (Button) findViewById(R.id.selectGame3);
         goToGame4 = (Button) findViewById(R.id.selectGame4);
+
+        goToRoom = (Button) findViewById(R.id.goToRoom);
+        createRoom = (Button) findViewById(R.id.createNewRoom);
+        roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
+
     }
 
     @Override
@@ -53,6 +61,7 @@ public class SelectGameScreen extends AppCompatActivity {
         QuestionDAL.createQuestion("drugo", new FillInQuestion("Filin2", "Ružan", "povijest"));
         QuestionDAL.createQuestion("prvo", new MultipleChoiceQuestion("Multiple1", "Lijep", "povijest", "Lijep", "Odgovor1", "Odgovor2", "Odgovor3"));
         QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Multiple2", "Ružan", "povijest", "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
+        QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Pritisni a", "a", "geografija", "a", "Odgovor1", "Odgovor2", "Odgovor3"));
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.europe);
 
@@ -105,7 +114,27 @@ public class SelectGameScreen extends AppCompatActivity {
         });
 
 
+        //Dodat opciju odlaska u igru s pitanjima odredene sobe
+        goToRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+
+        createRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(roomNameEditText.getText().length()!=0){
+                    Intent intent = new Intent(SelectGameScreen.this, CreateRoomScreen.class);
+                    intent.putExtra("nickname", nickname);
+                    intent.putExtra("roomName", roomNameEditText.getText().toString());
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
     }
 }

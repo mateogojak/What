@@ -35,18 +35,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Broj sobe:"/>
+                android:text="Soba:"/>
 
             <EditText
+                android:id="@+id/roomNameEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="upisi broj sobe"/>
+                android:hint="upisi ime sobe"/>
 
             <Button
+                android:id="@+id/goToRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="idi u sobu"/>
             <Button
+                android:id="@+id/createNewRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="nova soba"/>

@@ -19,6 +19,8 @@
         <activity android:name=".SelectGameScreen"/>
         <activity android:name=".GameScreen"/>
         <activity android:name=".EndScreen"/>
+        <activity android:name=".CreateRoomScreen"/>
+
 
     </application>
 

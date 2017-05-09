@@ -29,9 +29,9 @@ public class StartScreen extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
-        nickSaved = myPrefs.getString("nickname", "NULL");
+        nickSaved = myPrefs.getString("nickname", "");
 
-        if(!nickSaved.equals("NULL")){
+        if(!nickSaved.equals("")){
 
             Intent intent = new Intent(StartScreen.this, SelectGameScreen.class);
             intent.putExtra("nickname", nickSaved);
