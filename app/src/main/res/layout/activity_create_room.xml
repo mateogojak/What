@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#f5f5f5"
+    android:id="@+id/allLay"
+    android:layout_height="match_parent"
+    tools:context="com.fer.ppij.what.StartScreen">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/roomNameDisplayTextView"
+            android:layout_width="match_parent"
+            android:textSize="25dp"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <Switch
+                android:id="@+id/switchTypesOfQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:text="Pitanje:"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/newQuestionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:text="Točan odgovor:"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/newCorrectAnswerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/wrongAnswer1TextView"
+                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:text="Odgovor:"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/newWrongAnswer1EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/wrongAnswer2TextView"
+                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:text="Odgovor:"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/newWrongAnswer2EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/wrongAnswer3TextView"
+                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:text="Odgovor:"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/newWrongAnswer3EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/addNewQuestionButton"
+                android:text="Dodaj pitanje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="Završi"
+                android:id="@+id/finishCreatingRoomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
