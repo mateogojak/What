@@ -119,7 +119,25 @@ public class SelectGameScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (roomNameEditText.getText().length() != 0) {
+                    
+                    if (roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())) {
+
+                        //ispisuje se nekakva poruka da se ne moze pristupiti sobi koja ima ime kao neko od zadanih podrucja.
+
+                    } else {
+
+                        Intent intent = new Intent(SelectGameScreen.this, GameScreen.class);
+                        intent.putExtra("nickname", nickname);
+                        intent.putExtra("gameName", roomNameEditText.getText().toString());
+                        startActivity(intent);
+                        finish();
+
+                    }
+                }
+
             }
+
         });
 
         createRoom.setOnClickListener(new View.OnClickListener() {
@@ -127,11 +145,18 @@ public class SelectGameScreen extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(roomNameEditText.getText().length()!=0){
-                    Intent intent = new Intent(SelectGameScreen.this, CreateRoomScreen.class);
-                    intent.putExtra("nickname", nickname);
-                    intent.putExtra("roomName", roomNameEditText.getText().toString());
-                    startActivity(intent);
-                    finish();
+
+                    if(roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())){
+
+                        //ispisuje se nekakva poruka da se ne moze stvoriti soba koja ima ime kao neko od zadanih podrucja.
+
+                    }else {
+                        Intent intent = new Intent(SelectGameScreen.this, CreateRoomScreen.class);
+                        intent.putExtra("nickname", nickname);
+                        intent.putExtra("roomName", roomNameEditText.getText().toString());
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });
