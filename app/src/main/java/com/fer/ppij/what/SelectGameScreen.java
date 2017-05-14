@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.FillInQuestion;
@@ -114,16 +115,16 @@ public class SelectGameScreen extends AppCompatActivity {
         });
 
 
-        //Dodat opciju odlaska u igru s pitanjima odredene sobe
         goToRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (roomNameEditText.getText().length() != 0) {
-                    
+
                     if (roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())) {
 
                         //ispisuje se nekakva poruka da se ne moze pristupiti sobi koja ima ime kao neko od zadanih podrucja.
+                        Toast.makeText(getApplicationContext(), "Ime sobe ne smije odgovarati zadanim područjima", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -134,6 +135,8 @@ public class SelectGameScreen extends AppCompatActivity {
                         finish();
 
                     }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Upiši ime sobe", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -149,6 +152,7 @@ public class SelectGameScreen extends AppCompatActivity {
                     if(roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())){
 
                         //ispisuje se nekakva poruka da se ne moze stvoriti soba koja ima ime kao neko od zadanih podrucja.
+                        Toast.makeText(getApplicationContext(), "Ime sobe ne smije odgovarati zadanim područjima", Toast.LENGTH_SHORT).show();
 
                     }else {
                         Intent intent = new Intent(SelectGameScreen.this, CreateRoomScreen.class);
@@ -158,6 +162,7 @@ public class SelectGameScreen extends AppCompatActivity {
                         finish();
                     }
                 }
+                Toast.makeText(getApplicationContext(), "Upiši ime sobe", Toast.LENGTH_SHORT).show();
             }
         });
 
