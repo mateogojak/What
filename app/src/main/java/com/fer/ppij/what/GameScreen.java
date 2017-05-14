@@ -303,6 +303,9 @@ public class GameScreen extends AppCompatActivity {
             if (checkAnswer(button.getText().toString()) == false) {
                 game.decreaseNumberOfLives();
             }
+            else {
+                game.increaseScore();
+            }
         }
 
     }
@@ -337,13 +340,14 @@ public class GameScreen extends AppCompatActivity {
 
     public void onCheckAnswerButtonClick(View view) {
         fillEditText.clearFocus();
-        hideSoftKeyboard();
+        //hideSoftKeyboard();
 
         if(answered == false) {
             answered = true;
             checkAnswerButton.setText("NASTAVI");
             if (checkAnswer(fillEditText.getText().toString())) {
                 fillEditText.setTextColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
+                game.increaseScore();
             }
             else {
                 game.decreaseNumberOfLives();

@@ -40,6 +40,10 @@ public class Game {
         return score;
     }
 
+    public void increaseScore(){
+        score++;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -55,7 +59,6 @@ public class Game {
     public  AbstractQuestion getNextQuestion(){
         int curr = currentQuestionNumber;
         currentQuestionNumber +=1;
-        score+=1;
         if(curr < questionPool.size()) {
             return questionPool.get(curr);
         }
