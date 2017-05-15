@@ -12,10 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fer.ppij.what.database.QuestionDAL;
+import com.fer.ppij.what.database.ScoreDAL;
 import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
 import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
+import com.fer.ppij.what.database.model.ScoreModel;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 /**
  * Created by Mateo on 5/2/2017.
@@ -68,6 +73,39 @@ public class SelectGameScreen extends AppCompatActivity {
         QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
                 bm, "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
 
+        // TODO: Ovdje vam je stvaranje novog highscora i dohvaćanje prvih n najboljih na highscore-u
+        //ScoreDAL.createNewScore(new ScoreModel(nickname, 50, "povijest"));
+//        ScoreDAL.getScores(2, new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                ScoreModel smodel = dataSnapshot.getValue(ScoreModel.class);
+//                System.out.println("Ovaj kod se pozove n puta, u ovom slučaju 2," +
+//                        " kao što je prvi argument funkcije ScoreDAL.getSCores");
+//                System.out.println(smodel.getNickname());
+//                System.out.println(smodel.getScore());
+//                System.out.println(smodel.getCategory());
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         goToGame1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

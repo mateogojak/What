@@ -23,7 +23,7 @@ public class QuestionDAL {
     private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("questions");
     private static StorageReference mStorage = FirebaseStorage.getInstance().getReference();
 
-    public QuestionDAL() {
+    private QuestionDAL() {
     }
 
     public static void createQuestion(final String id, final AbstractQuestion question) {
