@@ -8,11 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fer.ppij.what.database.FirebaseTest;
-import com.fer.ppij.what.database.QuestionDAL;
-import com.fer.ppij.what.database.model.AbstractQuestion;
-import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
-
 /**
  * Created by Mateo on 5/2/2017.
  */
@@ -20,7 +15,7 @@ import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 public class StartScreen extends AppCompatActivity {
     private EditText nicknameInputField;
     private Button goToGameSelect;
-    private String nickname,nickSaved;
+    private String nickname, nickSaved;
     SharedPreferences myPrefs;
 
     @Override
@@ -31,7 +26,7 @@ public class StartScreen extends AppCompatActivity {
         myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
         nickSaved = myPrefs.getString("nickname", "");
 
-        if(!nickSaved.equals("")){
+        if (!nickSaved.equals("")) {
 
             Intent intent = new Intent(StartScreen.this, SelectGameScreen.class);
             intent.putExtra("nickname", nickSaved);
@@ -39,7 +34,6 @@ public class StartScreen extends AppCompatActivity {
             finish();
 
         }
-
 
 
         nicknameInputField = (EditText) findViewById(R.id.nicknameInput);

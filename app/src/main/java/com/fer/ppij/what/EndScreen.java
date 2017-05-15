@@ -15,6 +15,7 @@ public class EndScreen extends AppCompatActivity {
 
     private Button newGame;
     private TextView scoreText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class EndScreen extends AppCompatActivity {
         newGame = (Button) findViewById(R.id.playAgainButton);
         scoreText = (TextView) findViewById(R.id.scoreTextView);
 
-        scoreText.setText(Integer.toString(getIntent().getIntExtra("score",0)));
+        scoreText.setText(Integer.toString(getIntent().getIntExtra("score", 0)));
 
     }
 

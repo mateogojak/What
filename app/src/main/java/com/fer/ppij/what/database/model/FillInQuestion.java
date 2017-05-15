@@ -10,9 +10,10 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class FillInQuestion extends AbstractQuestion {
 
-    public FillInQuestion(){}
+    public FillInQuestion() {
+    }
 
-    public FillInQuestion(String text, String correctAnswer, String category){
+    public FillInQuestion(String text, String correctAnswer, String category) {
         this(text, correctAnswer, category, false);
     }
 

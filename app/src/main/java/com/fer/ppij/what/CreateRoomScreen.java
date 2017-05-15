@@ -3,7 +3,6 @@ package com.fer.ppij.what;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -11,20 +10,22 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.AbstractQuestion;
 import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * Created by Mateo on 5/9/2017.
  */
 
-public class CreateRoomScreen extends AppCompatActivity{
+public class CreateRoomScreen extends AppCompatActivity {
 
     private EditText question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3;
-    private TextView displayRoomName,wrongAnswer1TextView, wrongAnswer2TextView, wrongAnswer3TextView;
+    private TextView displayRoomName, wrongAnswer1TextView, wrongAnswer2TextView, wrongAnswer3TextView;
     private Button addQuestion, finishCreatingRoom;
     //pitanja koja korisnik doda za sobu
     private ArrayList<AbstractQuestion> questions = new ArrayList<>();
@@ -63,7 +64,7 @@ public class CreateRoomScreen extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
+                if (isChecked) {
                     wrongAnswer1.setVisibility(View.INVISIBLE);
                     wrongAnswer1TextView.setVisibility(View.INVISIBLE);
                     wrongAnswer2.setVisibility(View.INVISIBLE);
@@ -71,8 +72,7 @@ public class CreateRoomScreen extends AppCompatActivity{
                     wrongAnswer3.setVisibility(View.INVISIBLE);
                     wrongAnswer3TextView.setVisibility(View.INVISIBLE);
                     checked = true;
-                }
-                else{
+                } else {
                     wrongAnswer1.setVisibility(View.VISIBLE);
                     wrongAnswer1TextView.setVisibility(View.VISIBLE);
                     wrongAnswer2.setVisibility(View.VISIBLE);
@@ -89,11 +89,11 @@ public class CreateRoomScreen extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                if(checked){
-                    questions.add(new FillInQuestion(question.getText().toString(),correctAnswer.getText().toString(),getIntent().getStringExtra("roomName")));
+                if (checked) {
+                    questions.add(new FillInQuestion(question.getText().toString(), correctAnswer.getText().toString(), getIntent().getStringExtra("roomName")));
                     question.setText("");
                     correctAnswer.setText("");
-                }else{
+                } else {
                     questions.add(new MultipleChoiceQuestion(question.getText().toString(), correctAnswer.getText().toString(), getIntent().getStringExtra("roomName"), correctAnswer.getText().toString(), wrongAnswer1.getText().toString(), wrongAnswer2.getText().toString(), wrongAnswer3.getText().toString()));
                     question.setText("");
                     correctAnswer.setText("");
@@ -109,6 +109,11 @@ public class CreateRoomScreen extends AppCompatActivity{
         finishCreatingRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // pitanja se stvore i dodaju pod kategoriju sa imenom sobe, dakle umjesto geografija bit će ime_sobe
+                for(AbstractQuestion question : questions) {
+                    QuestionDAL.createQuestion(displayRoomName.getText().toString(), question);
+                }
+
                 Intent intent = new Intent(CreateRoomScreen.this, SelectGameScreen.class);
                 intent.putExtra("nickname", getIntent().getStringExtra("nickname"));
                 startActivity(intent);
