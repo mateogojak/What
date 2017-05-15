@@ -15,15 +15,16 @@ public class MultipleChoiceQuestion extends AbstractQuestion {
 
     private List<String> answers = new ArrayList<>();
 
-    public MultipleChoiceQuestion(){}
+    public MultipleChoiceQuestion() {
+    }
 
-    public MultipleChoiceQuestion(String text, String correctAnswer, String category, String... answers){
-        this(text,correctAnswer, category, false, answers);
+    public MultipleChoiceQuestion(String text, String correctAnswer, String category, String... answers) {
+        this(text, correctAnswer, category, false, answers);
     }
 
     protected MultipleChoiceQuestion(String text, String correctAnswer, String category, boolean hasImage,
                                      String... answers) {
-        super(text, correctAnswer, category, (hasImage? QuestionType.IMAGE_MULTIPLE_CHOICE : QuestionType.MULTIPLE_CHOICE));
+        super(text, correctAnswer, category, (hasImage ? QuestionType.IMAGE_MULTIPLE_CHOICE : QuestionType.MULTIPLE_CHOICE));
 
         for (String answer : answers) {
             this.answers.add(answer);

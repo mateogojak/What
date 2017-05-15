@@ -12,14 +12,14 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class AbstractQuestion implements IQuestion {
 
 
-
     protected String text;
     protected String correctAnswer;
     protected String category;
     protected String questionType;
     protected boolean hasImage;
 
-    protected AbstractQuestion() {}
+    protected AbstractQuestion() {
+    }
 
     protected AbstractQuestion(String text, String correctAnswer, String category, QuestionType questionType) {
         this.text = text;

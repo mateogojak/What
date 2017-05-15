@@ -12,8 +12,12 @@ import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 
 public interface QuestionVisitor {
     void visit(MultipleChoiceQuestion multipleChoiceQuestion);
+
     void visit(ImageMultipleChoiceQuestion imageMultipleChoiceQuestion);
+
     void visit(FillInQuestion fillInQuestion);
+
     void visit(ImageFillInQuestion imageFillInQuestion);
+
     void visit(AbstractQuestion abstractQuestion);
 }

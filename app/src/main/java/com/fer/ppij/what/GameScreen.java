@@ -48,14 +48,14 @@ public class GameScreen extends AppCompatActivity {
     private TextView questionDisplayTextView;
     private Button answerA, answerB, answerC, answerD, checkAnswerButton;
 
-    private Button buttonContinue,fillInButtonContinue;
+    private Button buttonContinue, fillInButtonContinue;
 
-    private  ImageView questionImage;
-    private  LinearLayout multipleAnswerLayout;
-    private  LinearLayout fillAnswerLayout;
+    private ImageView questionImage;
+    private LinearLayout multipleAnswerLayout;
+    private LinearLayout fillAnswerLayout;
     private EditText fillEditText;
 
-    private String nickname,gameName;
+    private String nickname, gameName;
     Game game;
     AbstractQuestion currentQuestion;
 
@@ -68,18 +68,18 @@ public class GameScreen extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         gameName = getIntent().getStringExtra("gameName");
 
-        questionImage = (ImageView)findViewById(R.id.questImage);
-        multipleAnswerLayout = (LinearLayout)findViewById(R.id.fourAnswerLayout);
-        fillAnswerLayout = (LinearLayout)findViewById(R.id.fill_in_answe_lay);
-        fillEditText = (EditText)findViewById(R.id.fill_edit_text);
+        questionImage = (ImageView) findViewById(R.id.questImage);
+        multipleAnswerLayout = (LinearLayout) findViewById(R.id.fourAnswerLayout);
+        fillAnswerLayout = (LinearLayout) findViewById(R.id.fill_in_answe_lay);
+        fillEditText = (EditText) findViewById(R.id.fill_edit_text);
 
         questionDisplayTextView = (TextView) findViewById(R.id.questionTextView);
         answerA = (Button) findViewById(R.id.answerA);
         answerB = (Button) findViewById(R.id.answerB);
         answerC = (Button) findViewById(R.id.answerC);
         answerD = (Button) findViewById(R.id.answerD);
-        checkAnswerButton = (Button)findViewById(R.id.check_answer_button);
-        buttonContinue = (Button)findViewById(R.id.button_continue);
+        checkAnswerButton = (Button) findViewById(R.id.check_answer_button);
+        buttonContinue = (Button) findViewById(R.id.button_continue);
         //fillInButtonContinue = (Button)findViewById(R.id.fill_in_button_continue);
 
     }
@@ -106,7 +106,7 @@ public class GameScreen extends AppCompatActivity {
             }
 
             private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
-                for(DataSnapshot questionSnapshot : dataSnapshot.child(type.getName()).getChildren()) {
+                for (DataSnapshot questionSnapshot : dataSnapshot.child(type.getName()).getChildren()) {
                     switch (type) {
                         case FILL_IN:
                             questionPool.add(questionSnapshot.getValue(FillInQuestion.class));
@@ -115,10 +115,12 @@ public class GameScreen extends AppCompatActivity {
                             ImageFillInQuestion imf = questionSnapshot.getValue(ImageFillInQuestion.class);
                             QuestionDAL.getQuestionImage("prvo", imf, new OnSuccessListener<byte[]>() {
                                 private ImageFillInQuestion imf;
+
                                 private OnSuccessListener<byte[]> init(ImageFillInQuestion imf) {
                                     this.imf = imf;
                                     return this;
                                 }
+
                                 @Override
                                 public void onSuccess(byte[] bytes) {
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -134,10 +136,12 @@ public class GameScreen extends AppCompatActivity {
                             ImageMultipleChoiceQuestion imc = questionSnapshot.getValue(ImageMultipleChoiceQuestion.class);
                             QuestionDAL.getQuestionImage("prvo", imc, new OnSuccessListener<byte[]>() {
                                 private ImageMultipleChoiceQuestion imc;
+
                                 private OnSuccessListener<byte[]> init(ImageMultipleChoiceQuestion imc) {
                                     this.imc = imc;
                                     return this;
                                 }
+
                                 @Override
                                 public void onSuccess(byte[] bytes) {
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -158,26 +162,26 @@ public class GameScreen extends AppCompatActivity {
 
     }
 
-    public void displayMultipleQuestion(MultipleChoiceQuestion question){
-        List<String > answers = question.getAnswers();
-        int a,b,c,d=0;
+    public void displayMultipleQuestion(MultipleChoiceQuestion question) {
+        List<String> answers = question.getAnswers();
+        int a, b, c, d = 0;
         Random rnd = new Random();
 
         a = rnd.nextInt(4);
 
-        b=rnd.nextInt(4);
-        while (b == a){
+        b = rnd.nextInt(4);
+        while (b == a) {
             b = rnd.nextInt(4);
         }
 
-        c=rnd.nextInt(4);
-        while (c == a || c == b){
-            c=rnd.nextInt(4);
+        c = rnd.nextInt(4);
+        while (c == a || c == b) {
+            c = rnd.nextInt(4);
         }
 
-        for(int i=0;i<4;i++){
-            if(a != i && b!= i && c!= i){
-                d=i;
+        for (int i = 0; i < 4; i++) {
+            if (a != i && b != i && c != i) {
+                d = i;
                 break;
             }
         }
@@ -189,121 +193,113 @@ public class GameScreen extends AppCompatActivity {
         answerD.setText(answers.get(d));
     }
 
-    public void displayMultipleChoiceWithImage(ImageMultipleChoiceQuestion question){
+    public void displayMultipleChoiceWithImage(ImageMultipleChoiceQuestion question) {
         displayMultipleQuestion(question);
         questionImage.setImageBitmap(question.getImage());
     }
 
-    public void displayFillInQuestion(FillInQuestion question){
+    public void displayFillInQuestion(FillInQuestion question) {
         questionDisplayTextView.setText(question.getText());
     }
 
-    public void displayFillInQuestionWithImage(ImageFillInQuestion question){
+    public void displayFillInQuestionWithImage(ImageFillInQuestion question) {
         displayFillInQuestion(question);
         questionImage.setImageBitmap(question.getImage());
     }
 
-    public void displayNextQuestion(){
+    public void displayNextQuestion() {
         AbstractQuestion question = game.getNextQuestion();
 
 
-        if(question == null) {
-            Log.d("LOG","nema pitanja");
+        if (question == null) {
+            Log.d("LOG", "nema pitanja");
             return;
         }
 
         currentQuestion = question;
 
-        if(question instanceof ImageMultipleChoiceQuestion){
-            Log.d("LOG","1111111111111111111111111");
-            setDisplayVisibility(View.VISIBLE,View.VISIBLE,View.GONE);
+        if (question instanceof ImageMultipleChoiceQuestion) {
+            Log.d("LOG", "1111111111111111111111111");
+            setDisplayVisibility(View.VISIBLE, View.VISIBLE, View.GONE);
             displayMultipleChoiceWithImage((ImageMultipleChoiceQuestion) question);
-        }
-        else if(question instanceof MultipleChoiceQuestion){
-            Log.d("LOG","2222222222222222222222");
-            setDisplayVisibility(View.GONE,View.VISIBLE,View.GONE);
-            displayMultipleQuestion((MultipleChoiceQuestion)question);
-        }
-        else if(question instanceof ImageFillInQuestion){
-            Log.d("LOG","33333333333333333333333333");
-            setDisplayVisibility(View.VISIBLE,View.GONE,View.VISIBLE);
-            displayFillInQuestionWithImage((ImageFillInQuestion)question);
-        }
-        else if(question instanceof FillInQuestion){
-            Log.d("LOG","4444444444444444");
-            setDisplayVisibility(View.GONE,View.GONE,View.VISIBLE);
-            displayFillInQuestion((FillInQuestion)question);
+        } else if (question instanceof MultipleChoiceQuestion) {
+            Log.d("LOG", "2222222222222222222222");
+            setDisplayVisibility(View.GONE, View.VISIBLE, View.GONE);
+            displayMultipleQuestion((MultipleChoiceQuestion) question);
+        } else if (question instanceof ImageFillInQuestion) {
+            Log.d("LOG", "33333333333333333333333333");
+            setDisplayVisibility(View.VISIBLE, View.GONE, View.VISIBLE);
+            displayFillInQuestionWithImage((ImageFillInQuestion) question);
+        } else if (question instanceof FillInQuestion) {
+            Log.d("LOG", "4444444444444444");
+            setDisplayVisibility(View.GONE, View.GONE, View.VISIBLE);
+            displayFillInQuestion((FillInQuestion) question);
         }
 
     }
 
-    public void setDisplayVisibility(int image,int multiple,int fill){
+    public void setDisplayVisibility(int image, int multiple, int fill) {
         questionImage.setVisibility(image);
         multipleAnswerLayout.setVisibility(multiple);
         fillAnswerLayout.setVisibility(fill);
     }
 
 
-    public void LoadEndScreen(){
+    public void LoadEndScreen() {
         Intent intent = new Intent(this, EndScreen.class);
         intent.putExtra("nickname", nickname);
         intent.putExtra("gameName", gameName);
-        intent.putExtra("score",game.getScore());
+        intent.putExtra("score", game.getScore());
         startActivity(intent);
     }
 
-    public boolean checkAnswer(String answer){
+    public boolean checkAnswer(String answer) {
         String correctAnswer = currentQuestion.getCorrectAnswer().toUpperCase();
         return correctAnswer.equals(answer.toUpperCase());
     }
 
     public void hideSoftKeyboard() {
 
-        InputMethodManager inputMethodManager = (InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
     }
 
-    public Button getCorrectAnswerButton(){
-        if(checkAnswer(answerA.getText().toString())){
+    public Button getCorrectAnswerButton() {
+        if (checkAnswer(answerA.getText().toString())) {
             return answerA;
-        }
-        else if(checkAnswer(answerB.getText().toString())){
+        } else if (checkAnswer(answerB.getText().toString())) {
             return answerB;
-        }
-        else if(checkAnswer(answerC.getText().toString())) {
+        } else if (checkAnswer(answerC.getText().toString())) {
             return answerC;
-        }
-        else {
+        } else {
             return answerD;
         }
     }
 
-    public void colorizeButtons(Button choosenButton){
-        if(choosenButton == getCorrectAnswerButton()){
+    public void colorizeButtons(Button choosenButton) {
+        if (choosenButton == getCorrectAnswerButton()) {
             choosenButton.setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
-        }
-        else {
+        } else {
             choosenButton.setBackgroundColor(Color.parseColor(WRONG_ANSWER_BUTTONS_COLOR));
             getCorrectAnswerButton().setBackgroundColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
         }
     }
 
-    public void decolorizeButtons(){
+    public void decolorizeButtons() {
         answerA.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
         answerB.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
         answerC.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
         answerD.setBackgroundColor(Color.parseColor(DEFAULT_BUTTONS_COLOR));
     }
 
-    public void handleMultipleAnswerButtonClick(Button button){
-        if(answered == false) {
+    public void handleMultipleAnswerButtonClick(Button button) {
+        if (answered == false) {
             answered = true;
             colorizeButtons(button);
             buttonContinue.setVisibility(View.VISIBLE);
             if (checkAnswer(button.getText().toString()) == false) {
                 game.decreaseNumberOfLives();
-            }
-            else {
+            } else {
                 game.increaseScore();
             }
         }
@@ -311,7 +307,7 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void OnAnswerAClick(View view) {
-       handleMultipleAnswerButtonClick(answerA);
+        handleMultipleAnswerButtonClick(answerA);
     }
 
     public void OnAnswerBClick(View view) {
@@ -327,10 +323,9 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void OnContinueButtonClick(View view) {
-        if(game.isFinished()){
+        if (game.isFinished()) {
             LoadEndScreen();
-        }
-        else {
+        } else {
             answered = false;
             decolorizeButtons();
             displayNextQuestion();
@@ -342,23 +337,20 @@ public class GameScreen extends AppCompatActivity {
         fillEditText.clearFocus();
         //hideSoftKeyboard();
 
-        if(answered == false) {
+        if (answered == false) {
             answered = true;
             checkAnswerButton.setText("NASTAVI");
             if (checkAnswer(fillEditText.getText().toString())) {
                 fillEditText.setTextColor(Color.parseColor(CORRECT_ANSWER_BUTTONS_COLOR));
                 game.increaseScore();
-            }
-            else {
+            } else {
                 game.decreaseNumberOfLives();
                 fillEditText.setTextColor(Color.parseColor(WRONG_ANSWER_BUTTONS_COLOR));
             }
-        }
-        else {
-            if(game.isFinished()){
+        } else {
+            if (game.isFinished()) {
                 LoadEndScreen();
-            }
-            else {
+            } else {
                 checkAnswerButton.setText("POTVRDI ODGOVOR");
                 answered = false;
                 fillEditText.setText("");

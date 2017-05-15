@@ -8,13 +8,13 @@ public class Question {
 
     private String questionText, correctAnswer, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3;
 
-    public Question(String questionText, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2, String incorrectAnswer3){
+    public Question(String questionText, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2, String incorrectAnswer3) {
 
         this.questionText = questionText;
         this.correctAnswer = correctAnswer;
         this.incorrectAnswer1 = incorrectAnswer1;
         this.incorrectAnswer2 = incorrectAnswer2;
-        this.incorrectAnswer3  = incorrectAnswer3;
+        this.incorrectAnswer3 = incorrectAnswer3;
     }
 
     public String getQuestionText() {

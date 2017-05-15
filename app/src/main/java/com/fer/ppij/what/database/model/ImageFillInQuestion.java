@@ -6,8 +6,6 @@ import com.fer.ppij.what.database.QuestionVisitor;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.io.File;
-
 /**
  * Created by antes on 6.5.2017..
  */
@@ -16,7 +14,8 @@ public class ImageFillInQuestion extends FillInQuestion {
 
     private Bitmap image;
 
-    public ImageFillInQuestion() {}
+    public ImageFillInQuestion() {
+    }
 
     public ImageFillInQuestion(String text, String correctAnswer, String category, Bitmap image) {
         super(text, correctAnswer, category, true);

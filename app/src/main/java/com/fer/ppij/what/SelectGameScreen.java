@@ -17,11 +17,6 @@ import com.fer.ppij.what.database.model.ImageFillInQuestion;
 import com.fer.ppij.what.database.model.ImageMultipleChoiceQuestion;
 import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-
 /**
  * Created by Mateo on 5/2/2017.
  */
@@ -30,7 +25,7 @@ public class SelectGameScreen extends AppCompatActivity {
 
     private String nickname;
     private TextView nicknameDisplayTextView;
-    private Button goToGame1, goToGame2,goToGame3,goToGame4, goToRoom, createRoom;
+    private Button goToGame1, goToGame2, goToGame3, goToGame4, goToRoom, createRoom;
     private EditText roomNameEditText;
 
     @Override
@@ -64,11 +59,14 @@ public class SelectGameScreen extends AppCompatActivity {
         QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Multiple2", "Ružan", "povijest", "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
         QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Pritisni a", "a", "geografija", "a", "Odgovor1", "Odgovor2", "Odgovor3"));
 
+        //TODO: Stvaranje pitanja sa slikom
+        // ovdje možemo dohvatiti resurs ili sliku iz uređaja
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.europe);
 
+        // ovdje se stvara pitanje sa slikom u obliku (String id_pitanja, i pitanje)
         QuestionDAL.createQuestion("prvo_fill_in", new ImageFillInQuestion("ImageFilin1", "Lijep", "povijest", bm));
         QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
-                bm,"Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
+                bm, "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
 
         goToGame1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +133,7 @@ public class SelectGameScreen extends AppCompatActivity {
                         finish();
 
                     }
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Upiši ime sobe", Toast.LENGTH_SHORT).show();
                 }
 
@@ -147,14 +145,14 @@ public class SelectGameScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(roomNameEditText.getText().length()!=0){
+                if (roomNameEditText.getText().length() != 0) {
 
-                    if(roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())){
+                    if (roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())) {
 
                         //ispisuje se nekakva poruka da se ne moze stvoriti soba koja ima ime kao neko od zadanih podrucja.
                         Toast.makeText(getApplicationContext(), "Ime sobe ne smije odgovarati zadanim područjima", Toast.LENGTH_SHORT).show();
 
-                    }else {
+                    } else {
                         Intent intent = new Intent(SelectGameScreen.this, CreateRoomScreen.class);
                         intent.putExtra("nickname", nickname);
                         intent.putExtra("roomName", roomNameEditText.getText().toString());

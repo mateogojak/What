@@ -16,8 +16,9 @@ public class Score {
         this.score = score;
     }
 
-    public void increaseScore(){this.score+=1;}
-
+    public void increaseScore() {
+        this.score += 1;
+    }
 
 
 }
