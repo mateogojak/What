@@ -1,6 +1,7 @@
 package com.fer.ppij.what.database;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.fer.ppij.what.database.model.AbstractQuestion;
 import com.fer.ppij.what.database.model.ImageFillInQuestion;
@@ -9,10 +10,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 /**
  * Created by antes on 6.5.2017..
@@ -44,17 +47,18 @@ public class QuestionDAL {
         } else if (question instanceof ImageFillInQuestion) {
             bitmap = ((ImageFillInQuestion) question).getImage();
         }
+        boolean isMultiple = question.getQuestionType().contains("multiple");
         if (bitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
             byte[] data = baos.toByteArray();
-            mStorage.child(id + ".jpg").putBytes(data);
+            mStorage.child(id + (isMultiple ? "_multiple" : "fill_in") + ".jpg").putBytes(data);
         }
     }
 
     public static void getQuestionImage(String id, final AbstractQuestion question, OnSuccessListener<byte[]> onSuccessListener) {
         boolean isMultiple = question.getQuestionType().contains("multiple");
-
+        Log.d("AAA", "poziv metode");
         mStorage.child(id + (isMultiple ? "_multiple" : "fill_in") + ".jpg").getBytes(Long.MAX_VALUE)
                 .addOnSuccessListener(onSuccessListener);
     }

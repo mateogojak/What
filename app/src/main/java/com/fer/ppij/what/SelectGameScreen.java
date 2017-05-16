@@ -69,9 +69,9 @@ public class SelectGameScreen extends AppCompatActivity {
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.europe);
 
         // ovdje se stvara pitanje sa slikom u obliku (String id_pitanja, i pitanje)
-        QuestionDAL.createQuestion("prvo_fill_in", new ImageFillInQuestion("ImageFilin1", "Lijep", "povijest", bm));
-        QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
-                bm, "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
+//        QuestionDAL.createQuestion("prvo_fill_in", new ImageFillInQuestion("ImageFilin1", "Lijep", "povijest", bm));
+//        QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
+//                bm, "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
 
         // TODO: Ovdje vam je stvaranje novog highscora i dohvaćanje prvih n najboljih na highscore-u
         //ScoreDAL.createNewScore(new ScoreModel(nickname, 50, "povijest"));

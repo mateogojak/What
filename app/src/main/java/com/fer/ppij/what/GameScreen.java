@@ -107,6 +107,7 @@ public class GameScreen extends AppCompatActivity {
 
             private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
                 for (DataSnapshot questionSnapshot : dataSnapshot.child(type.getName()).getChildren()) {
+                    System.out.println("Hvatam pitanje " + type);
                     switch (type) {
                         case FILL_IN:
                             questionPool.add(questionSnapshot.getValue(FillInQuestion.class));
@@ -123,6 +124,7 @@ public class GameScreen extends AppCompatActivity {
 
                                 @Override
                                 public void onSuccess(byte[] bytes) {
+                                    Log.d("AAA","ovo je kurac " + bytes.length);
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     imf.setImage(bitmap);
                                 }
