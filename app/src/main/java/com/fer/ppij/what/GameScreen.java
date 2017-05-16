@@ -107,13 +107,16 @@ public class GameScreen extends AppCompatActivity {
 
             private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
                 for (DataSnapshot questionSnapshot : dataSnapshot.child(type.getName()).getChildren()) {
+                    String id = questionSnapshot.getKey();
+
                     switch (type) {
                         case FILL_IN:
                             questionPool.add(questionSnapshot.getValue(FillInQuestion.class));
                             break;
                         case IMAGE_FILL_IN:
                             ImageFillInQuestion imf = questionSnapshot.getValue(ImageFillInQuestion.class);
-                            QuestionDAL.getQuestionImage("prvo", imf, new OnSuccessListener<byte[]>() {
+                            String category = imf.getCategory();
+                            QuestionDAL.getQuestionImage(id + "_" + category, imf, new OnSuccessListener<byte[]>() {
                                 private ImageFillInQuestion imf;
 
                                 private OnSuccessListener<byte[]> init(ImageFillInQuestion imf) {
@@ -123,6 +126,7 @@ public class GameScreen extends AppCompatActivity {
 
                                 @Override
                                 public void onSuccess(byte[] bytes) {
+                                    Log.d("AAA","ovo je kurac " + bytes.length);
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     imf.setImage(bitmap);
                                 }

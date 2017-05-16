@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 public class QuestionDAL {
 
     private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("questions");
+    private static FirebaseStorage storage = FirebaseStorage.getInstance();
     private static StorageReference mStorage = FirebaseStorage.getInstance().getReference();
 
     private QuestionDAL() {
@@ -44,18 +45,19 @@ public class QuestionDAL {
         } else if (question instanceof ImageFillInQuestion) {
             bitmap = ((ImageFillInQuestion) question).getImage();
         }
+        String category = question.getCategory();
         if (bitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
             byte[] data = baos.toByteArray();
-            mStorage.child(id + ".jpg").putBytes(data);
+            mStorage.child(id + "_" + category + ".jpg").putBytes(data);
         }
     }
 
     public static void getQuestionImage(String id, final AbstractQuestion question, OnSuccessListener<byte[]> onSuccessListener) {
-        boolean isMultiple = question.getQuestionType().contains("multiple");
-
-        mStorage.child(id + (isMultiple ? "_multiple" : "fill_in") + ".jpg").getBytes(Long.MAX_VALUE)
+        String category = question.getCategory();
+        storage.getReferenceFromUrl("gs://ppij-project-what.appspot.com/" + id + "_" + category + ".jpg")
+                .getBytes(1024*1024)
                 .addOnSuccessListener(onSuccessListener);
     }
 
