@@ -1,0 +1,50 @@
+
+        //TODO: Questions for testing, delete after
+//        QuestionDAL.createQuestion("prvo", new FillInQuestion("Filin1", "Lijep", "povijest"));
+//        QuestionDAL.createQuestion("drugo", new FillInQuestion("Filin2", "Ružan", "povijest"));
+//        QuestionDAL.createQuestion("prvo", new MultipleChoiceQuestion("Multiple1", "Lijep", "povijest", "Lijep", "Odgovor1", "Odgovor2", "Odgovor3"));
+//        QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Multiple2", "Ružan", "povijest", "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
+//        QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Pritisni a", "a", "geografija", "a", "Odgovor1", "Odgovor2", "Odgovor3"));
+
+        //TODO: Stvaranje pitanja sa slikom
+        // ovdje možemo dohvatiti resurs ili sliku iz uređaja
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.europe);
+
+        // ovdje se stvara pitanje sa slikom u obliku (String id_pitanja, i pitanje)
+//        QuestionDAL.createQuestion("prvo_fill_in", new ImageFillInQuestion("ImageFilin1", "Lijep", "povijest", bm));
+//        QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
+//                bm, "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
+
+        // TODO: Ovdje vam je stvaranje novog highscora i dohvaćanje prvih n najboljih na highscore-u
+        //ScoreDAL.createNewScore(new ScoreModel(nickname, 50, "povijest"));
+//        ScoreDAL.getScores(2, new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                ScoreModel smodel = dataSnapshot.getValue(ScoreModel.class);
+//                System.out.println("Ovaj kod se pozove n puta, u ovom slučaju 2," +
+//                        " kao što je prvi argument funkcije ScoreDAL.getSCores");
+//                System.out.println(smodel.getNickname());
+//                System.out.println(smodel.getScore());
+//                System.out.println(smodel.getCategory());
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
