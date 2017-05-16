@@ -8,14 +8,10 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -50,17 +46,15 @@ import java.util.Random;
 
 public class GameScreen extends AppCompatActivity {
 
-    private final int NUMBER_OF_LIFES = 2;
+    private final int NUMBER_OF_LIVES = 2;
     private final String DEFAULT_BUTTONS_COLOR = "#d3d3d3";
-    private final String CORRECT_ANSWER_BUTTONS_COLOR = "#00ff00";
-    private final String WRONG_ANSWER_BUTTONS_COLOR = "#ff0000";
     private static final int NUMBER_OF_QUESTIONS = 10;
 
     private TextView questionDisplayTextView;
     private TextView scoreNumTxt;
     private Button answerA, answerB, answerC, answerD, checkAnswerButton;
 
-    private FloatingActionButton buttonContinue, fillInButtonContinue;
+    private FloatingActionButton buttonContinue;
 
     private ImageView questionImage;
     private ImageView prviZivot;
@@ -70,7 +64,6 @@ public class GameScreen extends AppCompatActivity {
     private RelativeLayout allLay;
     private LinearLayout multipleAnswerLayout;
     private LinearLayout topLayout;
-    private LinearLayout naVrhuLayout;
     private LinearLayout fillAnswerLayout;
     private LinearLayout zivotLayout;
     private EditText fillEditText;
@@ -78,11 +71,14 @@ public class GameScreen extends AppCompatActivity {
     private String nickname, gameName;
     Game game;
     AbstractQuestion currentQuestion;
+    List<AbstractQuestion> questionPool = new ArrayList<>();
 
     boolean answered = false;
     boolean fillInCorrect=false;
     boolean fillInFalse=false;
     boolean isTest = false;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +94,6 @@ public class GameScreen extends AppCompatActivity {
         allLay =  (RelativeLayout)findViewById(R.id.allLay);
         waitingLay =  (RelativeLayout)findViewById(R.id.waitingLay);
         topLayout = (LinearLayout) findViewById(R.id.topLay);
-        naVrhuLayout = (LinearLayout) findViewById(R.id.naVrhu);
         multipleAnswerLayout = (LinearLayout) findViewById(R.id.fourAnswerLayout);
         fillAnswerLayout = (LinearLayout) findViewById(R.id.fill_in_answe_lay);
         zivotLayout = (LinearLayout) findViewById(R.id.zivotLay);
@@ -112,8 +107,6 @@ public class GameScreen extends AppCompatActivity {
         answerD = (Button) findViewById(R.id.answerD);
         checkAnswerButton = (Button) findViewById(R.id.check_answer_button);
         buttonContinue = (FloatingActionButton) findViewById(R.id.button_continue);
-        //fillInButtonContinue = (Button)findViewById(R.id.fill_in_button_continue);
-
 
         if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA"))) isTest = true;
         if(isTest)zivotLayout.setVisibility(View.GONE);
@@ -123,10 +116,21 @@ public class GameScreen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        QuestionDAL.getQuestions(gameName, 4, new ValueEventListener() {
+        if(gameName.equalsIgnoreCase("random")) {
+            getQuestionForCategory("književnost");
+            getQuestionForCategory("geografija");
+            getQuestionForCategory("povijest");
+        } else {
+            getQuestionForCategory(gameName);
+        }
+
+        game = new Game(gameName, questionPool, NUMBER_OF_LIVES);
+    }
+
+    private void getQuestionForCategory(final String category) {
+        QuestionDAL.getQuestions(category, 4, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<AbstractQuestion> questionPool = new ArrayList<AbstractQuestion>();
 
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.FILL_IN);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_FILL_IN);
@@ -135,20 +139,23 @@ public class GameScreen extends AppCompatActivity {
 
                 Collections.shuffle(questionPool);
                 // slice only first 10 questions for the game
-//                questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
-                game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
+                if(NUMBER_OF_QUESTIONS < questionPool.size()) {
+                    questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
+                }
+
                 displayNextQuestion();
             }
 
             private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
                 for (DataSnapshot questionSnapshot : dataSnapshot.child(type.getName()).getChildren()) {
+                    String id = questionSnapshot.getKey();
                     switch (type) {
                         case FILL_IN:
                             questionPool.add(questionSnapshot.getValue(FillInQuestion.class));
                             break;
                         case IMAGE_FILL_IN:
                             ImageFillInQuestion imf = questionSnapshot.getValue(ImageFillInQuestion.class);
-                            QuestionDAL.getQuestionImage("prvo", imf, new OnSuccessListener<byte[]>() {
+                            QuestionDAL.getQuestionImage(id, imf, new OnSuccessListener<byte[]>() {
                                 private ImageFillInQuestion imf;
 
                                 private OnSuccessListener<byte[]> init(ImageFillInQuestion imf) {
@@ -169,7 +176,7 @@ public class GameScreen extends AppCompatActivity {
                             break;
                         case IMAGE_MULTIPLE_CHOICE:
                             ImageMultipleChoiceQuestion imc = questionSnapshot.getValue(ImageMultipleChoiceQuestion.class);
-                            QuestionDAL.getQuestionImage("prvo", imc, new OnSuccessListener<byte[]>() {
+                            QuestionDAL.getQuestionImage(id, imc, new OnSuccessListener<byte[]>() {
                                 private ImageMultipleChoiceQuestion imc;
 
                                 private OnSuccessListener<byte[]> init(ImageMultipleChoiceQuestion imc) {
@@ -194,7 +201,6 @@ public class GameScreen extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void displayMultipleQuestion(MultipleChoiceQuestion question) {
@@ -245,26 +251,21 @@ public class GameScreen extends AppCompatActivity {
     public void displayNextQuestion() {
         AbstractQuestion question = game.getNextQuestion();
         if (question == null) {
-            Log.d("LOG", "nema pitanja");
             return;
         }
 
         currentQuestion = question;
         waitingLay.setVisibility(View.GONE);
         if (question instanceof ImageMultipleChoiceQuestion) {
-            Log.d("LOG", "1111111111111111111111111");
             setDisplayVisibility(View.VISIBLE, View.VISIBLE, View.GONE);
             displayMultipleChoiceWithImage((ImageMultipleChoiceQuestion) question);
         } else if (question instanceof MultipleChoiceQuestion) {
-            Log.d("LOG", "2222222222222222222222");
             setDisplayVisibility(View.GONE, View.VISIBLE, View.GONE);
             displayMultipleQuestion((MultipleChoiceQuestion) question);
         } else if (question instanceof ImageFillInQuestion) {
-            Log.d("LOG", "33333333333333333333333333");
             setDisplayVisibility(View.VISIBLE, View.GONE, View.VISIBLE);
             displayFillInQuestionWithImage((ImageFillInQuestion) question);
         } else if (question instanceof FillInQuestion) {
-            Log.d("LOG", "4444444444444444");
             setDisplayVisibility(View.GONE, View.GONE, View.VISIBLE);
             displayFillInQuestion((FillInQuestion) question);
         }
@@ -445,7 +446,7 @@ public class GameScreen extends AppCompatActivity {
 
     public void onCheckAnswerButtonClick(View view) {
         fillEditText.clearFocus();
-        //hideSoftKeyboard();
+        if(!fillEditText.getText().toString().isEmpty()) hideSoftKeyboard();
 
         if (answered == false) {
             answered = true;

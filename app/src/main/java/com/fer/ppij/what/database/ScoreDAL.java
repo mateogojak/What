@@ -42,7 +42,7 @@ public class ScoreDAL {
         if (n <= 0) {
             throw new IllegalArgumentException("Broj pitanja mora biti veci od 0");
         }
-        mDatabase.limitToFirst(n).orderByValue().addChildEventListener(childEventListener);
+        mDatabase.addChildEventListener(childEventListener);
     }
 
 }

@@ -49,6 +49,6 @@ public class ScoreModel implements Comparable<ScoreModel>{
 
     @Override
     public int compareTo(@NonNull ScoreModel o) {
-        return score.compareTo(o.getScore());
+        return o.score.compareTo(this.score);
     }
 }

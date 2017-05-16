@@ -65,21 +65,9 @@ public class QuestionDAL {
 
     public static void getQuestion(String category, String id, ValueEventListener valueEventListener) {
         mDatabase.child(category).child(id).addValueEventListener(valueEventListener);
-//        mDatabase.child(category).child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                dataSnapshot.getValue(AbstractQuestion.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w(TAG, "loadQuestion:onCancelled", databaseError.toException());
-//            }
-//        });
     }
 
     public static void getQuestions(String category, int numberOfQuestions, ValueEventListener valueEventListener) {
-        //mDatabase.child(category).limitToFirst(numberOfQuestions).addChildEventListener(childEventListener);
-            mDatabase.child(category).limitToFirst(numberOfQuestions).addValueEventListener(valueEventListener);
+        mDatabase.child(category).limitToFirst(numberOfQuestions).addValueEventListener(valueEventListener);
     }
 }

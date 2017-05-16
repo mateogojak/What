@@ -36,11 +36,8 @@ public class StartScreen extends AppCompatActivity {
             finish();
         }
 
-
         nicknameInputField = (EditText) findViewById(R.id.nicknameInput);
         goToGameSelect = (FloatingActionButton) findViewById(R.id.buttonProceed);
-
-
     }
 
     @Override
