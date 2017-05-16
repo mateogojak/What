@@ -484,7 +484,6 @@ public class GameScreen extends AppCompatActivity {
                 fillInFalse=true;
                 animateColorChange(R.color.greyColor,R.color.redBtnColor,allLay);
                 game.decreaseNumberOfLives();
-                game.decreaseNumberOfLives();
                 if(game.getLives()==1){
                     drugiZivot.setVisibility(View.GONE);
                 }else{
