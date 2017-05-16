@@ -72,6 +72,7 @@ public class GameScreen extends AppCompatActivity {
     private LinearLayout topLayout;
     private LinearLayout naVrhuLayout;
     private LinearLayout fillAnswerLayout;
+    private LinearLayout zivotLayout;
     private EditText fillEditText;
 
     private String nickname, gameName;
@@ -100,6 +101,7 @@ public class GameScreen extends AppCompatActivity {
         naVrhuLayout = (LinearLayout) findViewById(R.id.naVrhu);
         multipleAnswerLayout = (LinearLayout) findViewById(R.id.fourAnswerLayout);
         fillAnswerLayout = (LinearLayout) findViewById(R.id.fill_in_answe_lay);
+        zivotLayout = (LinearLayout) findViewById(R.id.zivotLay);
         fillEditText = (EditText) findViewById(R.id.fill_edit_text);
 
         questionDisplayTextView = (TextView) findViewById(R.id.questionTextView);
@@ -114,7 +116,7 @@ public class GameScreen extends AppCompatActivity {
 
 
         if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA"))) isTest = true;
-
+        if(isTest)zivotLayout.setVisibility(View.GONE);
     }
 
     @Override
