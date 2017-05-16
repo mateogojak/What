@@ -32,6 +32,8 @@ public class CreateRoomScreen extends AppCompatActivity {
     //pitanja koja korisnik doda za sobu
     private ArrayList<AbstractQuestion> questions = new ArrayList<>();
 
+    private int i =0;
+
     private Switch switchTypeOfQuestions;
     private boolean checked = false;
 
@@ -153,7 +155,8 @@ public class CreateRoomScreen extends AppCompatActivity {
                 }else{
                     // pitanja se stvore i dodaju pod kategoriju sa imenom sobe, dakle umjesto geografija bit će ime_sobe
                     for(AbstractQuestion question : questions) {
-                        QuestionDAL.createQuestion(displayRoomName.getText().toString(), question);
+                        QuestionDAL.createQuestion(Integer.toString(i), question);
+                        i++;
                     }
 
                     Intent intent = new Intent(CreateRoomScreen.this, SelectGameScreen.class);
