@@ -92,7 +92,6 @@ public class GameScreen extends AppCompatActivity {
         super.onStart();
 
         if (gameName.equalsIgnoreCase("random")) {
-            System.out.println("ajde u pm");
             getQuestionsForCategory("geografija");
             getQuestionsForCategory("povijest");
             getQuestionsForCategory("književnost");
@@ -100,13 +99,7 @@ public class GameScreen extends AppCompatActivity {
             getQuestionsForCategory(gameName);
         }
 
-        Collections.shuffle(questionPool);
-        // slice only first 10 questions for the game
-        if (NUMBER_OF_QUESTIONS < questionPool.size()) {
-            questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
-        }
         game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
-
     }
 
     private void getQuestionsForCategory(final String category) {
@@ -117,6 +110,12 @@ public class GameScreen extends AppCompatActivity {
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_FILL_IN);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.MULTIPLE_CHOICE);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_MULTIPLE_CHOICE);
+
+                Collections.shuffle(questionPool);
+                // slice only first 10 questions for the game
+                if (NUMBER_OF_QUESTIONS < questionPool.size()) {
+                    questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
+                }
 
                 displayNextQuestion();
             }
