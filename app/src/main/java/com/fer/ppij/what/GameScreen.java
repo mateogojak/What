@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -340,7 +341,8 @@ public class GameScreen extends AppCompatActivity {
 
     public void onCheckAnswerButtonClick(View view) {
         fillEditText.clearFocus();
-        //hideSoftKeyboard();
+        if(!fillEditText.getText().toString().isEmpty())
+        hideSoftKeyboard();
 
         if (answered == false) {
             answered = true;
