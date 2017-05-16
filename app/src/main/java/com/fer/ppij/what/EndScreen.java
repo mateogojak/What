@@ -2,7 +2,6 @@ package com.fer.ppij.what;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fer.ppij.what.database.ScoreDAL;
 import com.fer.ppij.what.database.model.ScoreModel;
@@ -25,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,6 +29,8 @@ import java.util.List;
 
 public class EndScreen extends AppCompatActivity {
 
+    private static final int SCOREBOARD_SIZE = 10;
+
     private Button newGame;
     private TextView scoreText;
     private String gameName;
@@ -40,7 +38,7 @@ public class EndScreen extends AppCompatActivity {
     private Integer score;
     private RecyclerView mRecyclerView;
     private UserAdapter mOfferAdapter;
-    private ArrayList<ScoreModel> data = new ArrayList<>();
+    private List<ScoreModel> data = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +52,9 @@ public class EndScreen extends AppCompatActivity {
         scoreText.setText(Integer.toString(getIntent().getIntExtra("score", 0)));
         nickname = getIntent().getStringExtra("nickname");
         gameName = getIntent().getStringExtra("gameName");
-        ScoreDAL.createNewScore(new ScoreModel(nickname,score,gameName));
+        ScoreDAL.createNewScore(new ScoreModel(nickname, score, gameName));
         getScores();
-        mRecyclerView = (RecyclerView)findViewById(R.id.rv);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
@@ -85,7 +83,7 @@ public class EndScreen extends AppCompatActivity {
             super(itemView);
             nick = (TextView) itemView.findViewById(R.id.nick);
             score = (TextView) itemView.findViewById(R.id.score);
-            category= (TextView) itemView.findViewById(R.id.category);
+            category = (TextView) itemView.findViewById(R.id.category);
         }
 
     }
@@ -101,8 +99,8 @@ public class EndScreen extends AppCompatActivity {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(EndScreen.this).inflate(R.layout.top_result_lay, parent, false);
-                return new TopListViewHolder(view);
+            View view = LayoutInflater.from(EndScreen.this).inflate(R.layout.top_result_lay, parent, false);
+            return new TopListViewHolder(view);
         }
 
         @Override
@@ -111,11 +109,11 @@ public class EndScreen extends AppCompatActivity {
                 ScoreModel model = data.get(position);
                 TopListViewHolder userViewHolder = (TopListViewHolder) holder;
                 userViewHolder.nick.setText(model.getNickname());
-                userViewHolder.score.setText(model.getScore()+"");
+                userViewHolder.score.setText(String.valueOf(model.getScore()));
                 userViewHolder.category.setText(model.getCategory());
 
 
-                }
+            }
             setAnimation(holder.itemView, position);
         }
 
@@ -125,11 +123,9 @@ public class EndScreen extends AppCompatActivity {
         }
 
 
-        private void setAnimation(View viewToAnimate, int position)
-        {
+        private void setAnimation(View viewToAnimate, int position) {
             // animiraj
-            if (position > lastPosition)
-            {
+            if (position > lastPosition) {
                 Animation animation = AnimationUtils.loadAnimation(EndScreen.this, R.anim.fade_in);
                 viewToAnimate.startAnimation(animation);
                 lastPosition = position;
@@ -137,18 +133,17 @@ public class EndScreen extends AppCompatActivity {
         }
     }
 
-    public void getScores(){
+    public void getScores() {
         //ScoreDAL.createNewScore(new ScoreModel("jure", 50, "povijest"));
-        ScoreDAL.getScores(10, new ChildEventListener() {
+        ScoreDAL.getScores(SCOREBOARD_SIZE, new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ScoreModel smodel = dataSnapshot.getValue(ScoreModel.class);
-                System.out.println("Ovaj kod se pozove n puta, u ovom slučaju 2," +
-                        " kao što je prvi argument funkcije ScoreDAL.getSCores");
-                System.out.println(smodel.getNickname());
-                System.out.println(smodel.getScore());
-                System.out.println(smodel.getCategory());
                 data.add(smodel);
+                Collections.sort(data);
+                if (data.size() > SCOREBOARD_SIZE) {
+                    data = data.subList(0, SCOREBOARD_SIZE);
+                }
                 mOfferAdapter = new UserAdapter();
                 mRecyclerView.setAdapter(mOfferAdapter);
             }
@@ -174,8 +169,9 @@ public class EndScreen extends AppCompatActivity {
             }
         });
     }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         finish();
         Intent intent = new Intent(this, SelectGameScreen.class);
         intent.putExtra("nickname", nickname);
