@@ -85,10 +85,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/pitanjeObjasnjenje"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:textSize="24dp"
-                    android:text="Pitanje:"
+                    android:text="Pitanje sa ponuđenim odgovorima:"
                     android:textColor="#fff"
                     android:gravity="center"
                     android:layout_height="wrap_content" />

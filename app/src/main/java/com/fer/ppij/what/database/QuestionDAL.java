@@ -80,7 +80,6 @@ public class QuestionDAL {
 
     public static void getQuestions(String category, int numberOfQuestions, ValueEventListener valueEventListener) {
         //mDatabase.child(category).limitToFirst(numberOfQuestions).addChildEventListener(childEventListener);
-        mDatabase.child(category).limitToFirst(numberOfQuestions).addValueEventListener(valueEventListener);
+            mDatabase.child(category).limitToFirst(numberOfQuestions).addValueEventListener(valueEventListener);
     }
-
 }
