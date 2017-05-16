@@ -198,7 +198,14 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayMultipleChoiceWithImage(ImageMultipleChoiceQuestion question) {
         displayMultipleQuestion(question);
-        questionImage.setImageBitmap(question.getImage());
+        String mDrawableName = question.getCorrectAnswer().toLowerCase();
+        int resID = getResources().getIdentifier(mDrawableName , "drawable", getPackageName());
+        if(question.getImage() != null){
+            questionImage.setImageBitmap(question.getImage());
+        }
+        else{
+            questionImage.setImageResource(resID);
+        }
     }
 
     public void displayFillInQuestion(FillInQuestion question) {
@@ -209,8 +216,12 @@ public class GameScreen extends AppCompatActivity {
         displayFillInQuestion(question);
         String mDrawableName = question.getCorrectAnswer().toLowerCase();
         int resID = getResources().getIdentifier(mDrawableName , "drawable", getPackageName());
-        questionImage.setImageResource(resID);
-        //questionImage.setImageBitmap(question.getImage());
+        if(question.getImage() != null){
+            questionImage.setImageBitmap(question.getImage());
+        }
+        else{
+            questionImage.setImageResource(resID);
+        }
     }
 
     public void displayNextQuestion() {
