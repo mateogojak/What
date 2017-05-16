@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#f5f5f5"
+    android:background="#263238"
     android:id="@+id/allLay"
     android:layout_height="match_parent"
     tools:context="com.fer.ppij.what.StartScreen">
@@ -11,89 +11,197 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/linear">
-
-            <TextView
-                android:id="@+id/nicknameDisplayTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"/>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/linear2">
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/chooseAreaLay"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_height="wrap_content"
+                    android:text="Odaberi područje ispitivanja:"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#fff"
+                    android:textSize="21dp"/>
+
+                <Button
+                    android:id="@+id/selectGame1"
+                    android:layout_width="match_parent"
+                    android:backgroundTint="#FFCECECE"
+                    android:minHeight="0dp"
+                    android:textColor="#3d3d3d"
+                    android:textStyle="bold"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="15sp"
+                    android:minWidth="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="povijest"/>
+
+                <Button
+                    android:id="@+id/selectGame2"
+                    android:layout_width="match_parent"
+                    android:backgroundTint="#FFCECECE"
+                    android:minHeight="0dp"
+                    android:textSize="15sp"
+                    android:textColor="#3d3d3d"
+                    android:textStyle="bold"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:minWidth="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="geografija"/>
+
+                <Button
+                    android:id="@+id/selectGame3"
+                    android:backgroundTint="#FFCECECE"
+                    android:layout_width="match_parent"
+                    android:textSize="15sp"
+                    android:minHeight="0dp"
+                    android:textColor="#3d3d3d"
+                    android:textStyle="bold"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:minWidth="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="književnost"/>
+
+                <Button
+                    android:id="@+id/selectGame4"
+                    android:backgroundTint="#cecece"
+                    android:layout_width="match_parent"
+                    android:minHeight="0dp"
+                    android:textColor="#3d3d3d"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:minWidth="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="random"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nadimak: "
+                        android:textColor="#cccccc"
+                        android:textStyle="italic"
+                        android:textSize="18sp"/>
+                        <TextView
+                            android:id="@+id/nicknameDisplayTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textStyle="bold|italic"
+                            android:textColor="#ffffff"/>
+                </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Promijeni nadimak"
+                    android:textAllCaps="false"
+                    android:background="@android:color/transparent"
+                    android:minHeight="0dp"
+                    android:paddingTop="4dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp"
+                    android:textStyle="italic"
+                    android:onClick="changeNicknameClick"
+                    android:textColor="#dadada"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="#e6e6e6"
             android:layout_height="wrap_content"
             android:id="@+id/linear2">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Soba:"/>
+                android:text="Želiš koristit svoja pitanja?"
+                android:layout_marginTop="12dp"
+                android:padding="4dp"
+                android:textSize="13sp"
+                android:textColor="#464646"
+                android:textStyle="italic"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="Otvori već gotovi test ili napravi svoj:"
+                android:layout_marginBottom="16dp"
+                android:textColor="#464646"
+                android:textStyle="italic"/>
 
             <EditText
                 android:id="@+id/roomNameEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="upisi ime sobe"/>
-
-            <Button
-                android:id="@+id/goToRoom"
+                android:paddingLeft="48dp"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="#1e1e1e"
+                android:paddingRight="48dp"
+                android:hint="Upiši ime testa"/>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="idi u sobu"/>
-            <Button
-                android:id="@+id/createNewRoom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="nova soba"/>
+                android:paddingBottom="16dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/goToRoom"
+                    android:backgroundTint="#26a69a"
+                    android:minWidth="0dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:minHeight="0dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#232323"
+                    android:text="Otvori test"/>
+                <Button
+                    android:id="@+id/createNewRoom"
+                    android:layout_width="wrap_content"
+                    android:minWidth="0dp"
+                    android:paddingLeft="25dp"
+                    android:minHeight="0dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingRight="25dp"
+                    android:backgroundTint="#1e272b"
+                    android:textColor="#fff"
+                    android:layout_height="wrap_content"
+                    android:text="Stvori test"/>
+            </LinearLayout>
 
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_below="@id/linear2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Odaberi područje:"
-                android:textColor="@android:color/black"
-                android:textSize="22dp"/>
-
-            <Button
-                    android:id="@+id/selectGame1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="povijest"/>
-
-            <Button
-                android:id="@+id/selectGame2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="geografija"/>
-
-            <Button
-                android:id="@+id/selectGame3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="književnost"/>
-
-            <Button
-                android:id="@+id/selectGame4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="random"/>
 
 
         </LinearLayout>

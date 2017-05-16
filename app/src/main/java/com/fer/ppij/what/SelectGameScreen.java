@@ -155,4 +155,10 @@ public class SelectGameScreen extends AppCompatActivity {
         });
 
     }
+
+    public void changeNicknameClick(View view){
+        Intent intent = new Intent(SelectGameScreen.this, StartScreen.class);
+        intent.putExtra("changeNick",true);
+        startActivity(intent);
+    }
 }

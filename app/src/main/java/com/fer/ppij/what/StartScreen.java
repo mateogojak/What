@@ -3,6 +3,7 @@ package com.fer.ppij.what;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,7 @@ import android.widget.EditText;
 
 public class StartScreen extends AppCompatActivity {
     private EditText nicknameInputField;
-    private Button goToGameSelect;
+    private FloatingActionButton goToGameSelect;
     private String nickname, nickSaved;
     SharedPreferences myPrefs;
 
@@ -22,12 +23,12 @@ public class StartScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        Boolean changeNick = getIntent().getBooleanExtra("changeNick",false);
 
         myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
         nickSaved = myPrefs.getString("nickname", "");
 
-        if (!nickSaved.equals("")) {
-
+        if (!nickSaved.equals("")&& !changeNick) {
             Intent intent = new Intent(StartScreen.this, SelectGameScreen.class);
             intent.putExtra("nickname", nickSaved);
             startActivity(intent);
@@ -37,7 +38,7 @@ public class StartScreen extends AppCompatActivity {
 
 
         nicknameInputField = (EditText) findViewById(R.id.nicknameInput);
-        goToGameSelect = (Button) findViewById(R.id.buttonProceed);
+        goToGameSelect = (FloatingActionButton) findViewById(R.id.buttonProceed);
 
 
     }

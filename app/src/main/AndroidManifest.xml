@@ -9,17 +9,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".StartScreen">
+        <activity android:name=".StartScreen"
+            android:label="Kviz znanja">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectGameScreen"/>
-        <activity android:name=".GameScreen"/>
-        <activity android:name=".EndScreen"/>
-        <activity android:name=".CreateRoomScreen"/>
+        <activity android:name=".SelectGameScreen"
+            android:label="Kviz znanja"/>
+        <activity android:name=".GameScreen"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".EndScreen"
+            android:label="Šteta..."/>
+        <activity android:name=".CreateRoomScreen"
+            android:label="Napravi svoj test"/>
 
 
     </application>
