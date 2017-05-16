@@ -37,6 +37,7 @@
                 <EditText
                     android:id="@+id/nicknameInput"
                     android:textColor="#fff"
+                    android:inputType="text"
                     android:layout_marginLeft="48dp"
                     android:layout_marginRight="48dp"
                     android:textColorHint="#68ffffff"

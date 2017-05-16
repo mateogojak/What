@@ -165,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="48dp"
                 android:maxLines="1"
+                android:inputType="text"
                 android:textAlignment="center"
                 android:maxLength="11"
                 android:textColor="#1e1e1e"

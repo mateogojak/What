@@ -98,6 +98,7 @@
                     android:backgroundTint="#fff"
                     android:textColor="#fff"
                     android:hint="Upiši pitanje..."
+                    android:inputType="text"
                     android:layout_margin="16dp"
                     android:textColorHint="#7affffff"
                     android:layout_width="match_parent"
@@ -126,6 +127,7 @@
                         <EditText
                             android:id="@+id/newCorrectAnswerEditText"
                             android:layout_width="match_parent"
+                            android:inputType="text"
                             android:layout_marginLeft="32dp"
                             android:layout_marginRight="32dp"
                             android:layout_marginBottom="8dp"
@@ -157,6 +159,7 @@
                             android:layout_width="match_parent"
                             android:layout_marginLeft="32dp"
                             android:layout_marginRight="32dp"
+                            android:inputType="text"
                             android:layout_marginBottom="8dp"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -187,6 +190,7 @@
                             android:layout_width="match_parent"
                             android:layout_marginLeft="32dp"
                             android:layout_marginRight="32dp"
+                            android:inputType="text"
                             android:layout_marginBottom="8dp"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -215,6 +219,7 @@
                             android:id="@+id/newWrongAnswer3EditText"
                             android:layout_width="match_parent"
                             android:layout_marginLeft="32dp"
+                            android:inputType="text"
                             android:layout_marginRight="32dp"
                             android:layout_marginBottom="8dp"
                             android:layout_height="wrap_content" />

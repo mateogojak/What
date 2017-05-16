@@ -63,6 +63,8 @@ public class GameScreen extends AppCompatActivity {
     private FloatingActionButton buttonContinue, fillInButtonContinue;
 
     private ImageView questionImage;
+    private ImageView prviZivot;
+    private ImageView drugiZivot;
     private RelativeLayout questImageLay;
     private RelativeLayout waitingLay;
     private RelativeLayout allLay;
@@ -89,6 +91,8 @@ public class GameScreen extends AppCompatActivity {
         gameName = getIntent().getStringExtra("gameName");
 
         questionImage = (ImageView) findViewById(R.id.questImage);
+        prviZivot = (ImageView) findViewById(R.id.prviZivot);
+        drugiZivot = (ImageView) findViewById(R.id.drugiZivot);
         questImageLay =  (RelativeLayout)findViewById(R.id.questImageLay);
         allLay =  (RelativeLayout)findViewById(R.id.allLay);
         waitingLay =  (RelativeLayout)findViewById(R.id.waitingLay);
@@ -268,10 +272,10 @@ public class GameScreen extends AppCompatActivity {
     public void setDisplayVisibility(int image, int multiple, int fill) {
         if(image==View.GONE){
             topLayout.setWeightSum(2);
-            questionDisplayTextView.setTextSize(19);
+            questionDisplayTextView.setTextSize(15);
         }else{
             topLayout.setWeightSum(6);
-            questionDisplayTextView.setTextSize(15);
+            questionDisplayTextView.setTextSize(13);
         }
         questionImage.setVisibility(image);
         questImageLay.setVisibility(image);
@@ -368,6 +372,11 @@ public class GameScreen extends AppCompatActivity {
             buttonContinue.setVisibility(View.VISIBLE);
             if (checkAnswer(button.getText().toString()) == false) {
                 game.decreaseNumberOfLives();
+                if(game.getLives()==1){
+                    drugiZivot.setVisibility(View.GONE);
+                }else{
+                    prviZivot.setVisibility(View.GONE);
+                }
             } else {
                 game.increaseScore();
                 scoreNumTxt.setText((Integer.parseInt(scoreNumTxt.getText().toString())+1)+"");
@@ -472,6 +481,12 @@ public class GameScreen extends AppCompatActivity {
                 fillInFalse=true;
                 animateColorChange(R.color.greyColor,R.color.redBtnColor,allLay);
                 game.decreaseNumberOfLives();
+                game.decreaseNumberOfLives();
+                if(game.getLives()==1){
+                    drugiZivot.setVisibility(View.GONE);
+                }else{
+                    prviZivot.setVisibility(View.GONE);
+                }
                 //fillEditText.setTextColor(Color.parseColor(WRONG_ANSWER_BUTTONS_COLOR));
             }
             animation.setAnimationListener(new Animation.AnimationListener() {
