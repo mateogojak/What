@@ -102,12 +102,11 @@ public class GameScreen extends AppCompatActivity {
 
         Collections.shuffle(questionPool);
         // slice only first 10 questions for the game
-        if (NUMBER_OF_QUESTIONS >= questionPool.size()) {
+        if (NUMBER_OF_QUESTIONS < questionPool.size()) {
             questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
         }
-
         game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
-        displayNextQuestion();
+
     }
 
     private void getQuestionsForCategory(final String category) {
@@ -119,7 +118,7 @@ public class GameScreen extends AppCompatActivity {
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.MULTIPLE_CHOICE);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_MULTIPLE_CHOICE);
 
-
+                displayNextQuestion();
             }
 
             private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
