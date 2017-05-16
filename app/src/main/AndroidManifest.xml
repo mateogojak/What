@@ -24,7 +24,8 @@
         <activity android:name=".EndScreen"
             android:label="Šteta..."/>
         <activity android:name=".CreateRoomScreen"
-            android:label="Napravi svoj test"/>
+            android:label="Napravi svoj test"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
 
     </application>

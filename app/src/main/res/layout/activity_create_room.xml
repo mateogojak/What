@@ -2,135 +2,273 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#f5f5f5"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#263238"
     android:id="@+id/allLay"
     android:layout_height="match_parent"
     tools:context="com.fer.ppij.what.StartScreen">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <RelativeLayout
-        android:id="@+id/relative1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:gravity="center"
-            android:id="@+id/roomNameDisplayTextView"
+        android:layout_height="match_parent"
+        android:paddingBottom="82dp">
+        <RelativeLayout
+            android:id="@+id/relative1"
             android:layout_width="match_parent"
-            android:textSize="25dp"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_below="@+id/relative1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="12dp"
             android:layout_height="wrap_content">
-
-
-            <Switch
-                android:id="@+id/switchTypesOfQuestion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:text="Pitanje:"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_height="wrap_content" />
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:text="Ime testa:"
+                        android:textColor="#fff"
+                        android:textStyle="italic"
+                        android:textSize="14dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/roomNameDisplayTextView"
+                        android:layout_width="match_parent"
+                        android:text="Bruno67890"
+                        android:textColor="#fff"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="54dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Promijeni vrstu pitanja"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <Switch
+                        android:id="@+id/switchTypesOfQuestion"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            <EditText
-                android:id="@+id/newQuestionEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            </LinearLayout>
 
 
-            <TextView
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:text="Točan odgovor:"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/newCorrectAnswerEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/wrongAnswer1TextView"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:text="Odgovor:"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/newWrongAnswer1EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/wrongAnswer2TextView"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:text="Odgovor:"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/newWrongAnswer2EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:id="@+id/wrongAnswer3TextView"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:text="Odgovor:"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/newWrongAnswer3EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_below="@+id/linear1"
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/relative1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:textSize="24dp"
+                    android:text="Pitanje:"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/newQuestionEditText"
+                    android:backgroundTint="#fff"
+                    android:textColor="#fff"
+                    android:hint="Upiši pitanje..."
+                    android:layout_margin="16dp"
+                    android:textColorHint="#7affffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardCornerRadius="8dp"
+                    android:elevation="4dp"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#fff"
+                    android:layout_margin="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginBottom="8dp"
+                            android:textSize="18dp"
+                            android:text="Točan odgovor:"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/addNewQuestionButton"
-                android:text="Dodaj pitanje"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/newCorrectAnswerEditText"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#e1e1e1"
+                    app:cardCornerRadius="8dp"
+                    android:elevation="4dp"
+                    android:layout_margin="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/wrongAnswer1TextView"
+                            android:layout_width="match_parent"
+                            android:textSize="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Odgovor:"
+                            android:gravity="center"
+                            android:layout_height="wrap_content" />
 
-            <Button
-                android:text="Završi"
-                android:id="@+id/finishCreatingRoomButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/newWrongAnswer1EditText"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#e1e1e1"
+                    app:cardCornerRadius="8dp"
+                    android:elevation="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/wrongAnswer2TextView"
+                            android:layout_width="match_parent"
+                            android:textSize="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Odgovor:"
+                            android:gravity="center"
+                            android:layout_height="wrap_content" />
 
+                        <EditText
+                            android:id="@+id/newWrongAnswer2EditText"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#e1e1e1"
+                    app:cardCornerRadius="8dp"
+                    android:elevation="4dp"
+                    android:layout_margin="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/wrongAnswer3TextView"
+                            android:layout_width="match_parent"
+                            android:textSize="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Odgovor:"
+                            android:gravity="center"
+                            android:layout_height="wrap_content" />
 
-        </LinearLayout>
-
+                        <EditText
+                            android:id="@+id/newWrongAnswer3EditText"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
-
-
-
+</ScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addNewQuestionButton"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add_white_24dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:background="#a8000000"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_toLeftOf="@id/addNewQuestionButton"
+        android:textColor="#fff"
+        android:text="Spremi pitanje"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/finishCreatingRoomButton"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        app:borderWidth="0dp"
+        app:backgroundTint="#cddc39"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_archive_black_24dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:background="#a8000000"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_toRightOf="@id/finishCreatingRoomButton"
+        android:textColor="#fff"
+        android:text="Stvori test"/>
 </RelativeLayout>

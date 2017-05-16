@@ -174,5 +174,12 @@ public class EndScreen extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed(){
+        finish();
+        Intent intent = new Intent(this, SelectGameScreen.class);
+        intent.putExtra("nickname", nickname);
+        startActivity(intent);
+    }
 
 }

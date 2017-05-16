@@ -2,11 +2,14 @@ package com.fer.ppij.what;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -26,7 +29,8 @@ public class CreateRoomScreen extends AppCompatActivity {
 
     private EditText question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3;
     private TextView displayRoomName, wrongAnswer1TextView, wrongAnswer2TextView, wrongAnswer3TextView;
-    private Button addQuestion, finishCreatingRoom;
+    private FloatingActionButton  finishCreatingRoom;
+    private FloatingActionButton addQuestion;
     //pitanja koja korisnik doda za sobu
     private ArrayList<AbstractQuestion> questions = new ArrayList<>();
 
@@ -44,8 +48,8 @@ public class CreateRoomScreen extends AppCompatActivity {
         wrongAnswer1 = (EditText) findViewById(R.id.newWrongAnswer1EditText);
         wrongAnswer2 = (EditText) findViewById(R.id.newWrongAnswer2EditText);
         wrongAnswer3 = (EditText) findViewById(R.id.newWrongAnswer3EditText);
-        addQuestion = (Button) findViewById(R.id.addNewQuestionButton);
-        finishCreatingRoom = (Button) findViewById(R.id.finishCreatingRoomButton);
+        addQuestion = (FloatingActionButton) findViewById(R.id.addNewQuestionButton);
+        finishCreatingRoom = (FloatingActionButton) findViewById(R.id.finishCreatingRoomButton);
         switchTypeOfQuestions = (Switch) findViewById(R.id.switchTypesOfQuestion);
 
         wrongAnswer1TextView = (TextView) findViewById(R.id.wrongAnswer1TextView);
@@ -67,18 +71,30 @@ public class CreateRoomScreen extends AppCompatActivity {
                 if (isChecked) {
                     wrongAnswer1.setVisibility(View.INVISIBLE);
                     wrongAnswer1TextView.setVisibility(View.INVISIBLE);
+                    LinearLayout cv1= (LinearLayout) wrongAnswer1.getParent();
+                    cv1.setVisibility(View.GONE);
                     wrongAnswer2.setVisibility(View.INVISIBLE);
                     wrongAnswer2TextView.setVisibility(View.INVISIBLE);
+                    LinearLayout cv2= (LinearLayout) wrongAnswer2.getParent();
+                    cv2.setVisibility(View.GONE);
                     wrongAnswer3.setVisibility(View.INVISIBLE);
                     wrongAnswer3TextView.setVisibility(View.INVISIBLE);
+                    LinearLayout cv3= (LinearLayout) wrongAnswer3.getParent();
+                    cv3.setVisibility(View.GONE);
                     checked = true;
                 } else {
                     wrongAnswer1.setVisibility(View.VISIBLE);
                     wrongAnswer1TextView.setVisibility(View.VISIBLE);
+                    LinearLayout cv1= (LinearLayout) wrongAnswer1.getParent();
+                    cv1.setVisibility(View.VISIBLE);
                     wrongAnswer2.setVisibility(View.VISIBLE);
                     wrongAnswer2TextView.setVisibility(View.VISIBLE);
+                    LinearLayout cv2= (LinearLayout) wrongAnswer2.getParent();
+                    cv2.setVisibility(View.VISIBLE);
                     wrongAnswer3.setVisibility(View.VISIBLE);
                     wrongAnswer3TextView.setVisibility(View.VISIBLE);
+                    LinearLayout cv3= (LinearLayout) wrongAnswer3.getParent();
+                    cv3.setVisibility(View.VISIBLE);
                     checked = false;
                 }
             }

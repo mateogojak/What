@@ -35,7 +35,7 @@
                 <Button
                     android:id="@+id/selectGame1"
                     android:layout_width="match_parent"
-                    android:backgroundTint="#FFCECECE"
+                    android:backgroundTint="#e4e4e4"
                     android:minHeight="0dp"
                     android:textColor="#3d3d3d"
                     android:textStyle="bold"
@@ -51,7 +51,7 @@
                 <Button
                     android:id="@+id/selectGame2"
                     android:layout_width="match_parent"
-                    android:backgroundTint="#FFCECECE"
+                    android:backgroundTint="#e4e4e4"
                     android:minHeight="0dp"
                     android:textSize="15sp"
                     android:textColor="#3d3d3d"
@@ -66,7 +66,7 @@
 
                 <Button
                     android:id="@+id/selectGame3"
-                    android:backgroundTint="#FFCECECE"
+                    android:backgroundTint="#e4e4e4"
                     android:layout_width="match_parent"
                     android:textSize="15sp"
                     android:minHeight="0dp"
@@ -82,7 +82,7 @@
 
                 <Button
                     android:id="@+id/selectGame4"
-                    android:backgroundTint="#cecece"
+                    android:backgroundTint="#e4e4e4"
                     android:layout_width="match_parent"
                     android:minHeight="0dp"
                     android:textColor="#3d3d3d"
@@ -166,6 +166,7 @@
                 android:paddingLeft="48dp"
                 android:maxLines="1"
                 android:textAlignment="center"
+                android:maxLength="11"
                 android:textColor="#1e1e1e"
                 android:paddingRight="48dp"
                 android:hint="Upiši ime testa"/>

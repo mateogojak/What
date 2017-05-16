@@ -65,7 +65,6 @@ public class SelectGameScreen extends AppCompatActivity {
                 intent.putExtra("nickname", nickname);
                 intent.putExtra("gameName", goToGame1.getText());
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -76,7 +75,6 @@ public class SelectGameScreen extends AppCompatActivity {
                 intent.putExtra("nickname", nickname);
                 intent.putExtra("gameName", goToGame2.getText());
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -87,7 +85,6 @@ public class SelectGameScreen extends AppCompatActivity {
                 intent.putExtra("nickname", nickname);
                 intent.putExtra("gameName", goToGame3.getText());
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -98,7 +95,6 @@ public class SelectGameScreen extends AppCompatActivity {
                 intent.putExtra("nickname", nickname);
                 intent.putExtra("gameName", goToGame4.getText());
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -120,7 +116,6 @@ public class SelectGameScreen extends AppCompatActivity {
                         intent.putExtra("nickname", nickname);
                         intent.putExtra("gameName", roomNameEditText.getText().toString());
                         startActivity(intent);
-                        finish();
 
                     }
                 } else {
@@ -147,7 +142,6 @@ public class SelectGameScreen extends AppCompatActivity {
                         intent.putExtra("nickname", nickname);
                         intent.putExtra("roomName", roomNameEditText.getText().toString());
                         startActivity(intent);
-                        finish();
                     }
                 }
                 Toast.makeText(getApplicationContext(), "Upiši ime sobe", Toast.LENGTH_SHORT).show();
@@ -160,5 +154,8 @@ public class SelectGameScreen extends AppCompatActivity {
         Intent intent = new Intent(SelectGameScreen.this, StartScreen.class);
         intent.putExtra("changeNick",true);
         startActivity(intent);
+    }
+    @Override
+    public void onBackPressed(){
     }
 }
