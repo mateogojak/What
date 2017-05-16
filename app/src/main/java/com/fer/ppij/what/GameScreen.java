@@ -40,7 +40,7 @@ import java.util.Random;
 
 public class GameScreen extends AppCompatActivity {
 
-    private final int NUMBER_OF_LIFES = 2;
+    private final int NUMBER_OF_LIFES = 3;
     private final String DEFAULT_BUTTONS_COLOR = "#d3d3d3";
     private final String CORRECT_ANSWER_BUTTONS_COLOR = "#00ff00";
     private final String WRONG_ANSWER_BUTTONS_COLOR = "#ff0000";
@@ -61,6 +61,8 @@ public class GameScreen extends AppCompatActivity {
     AbstractQuestion currentQuestion;
 
     boolean answered = false;
+
+    List<AbstractQuestion> questionPool = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,21 +91,35 @@ public class GameScreen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        QuestionDAL.getQuestions(gameName, 4, new ValueEventListener() {
+        if (gameName.equalsIgnoreCase("random")) {
+            System.out.println("ajde u pm");
+            getQuestionsForCategory("geografija");
+            getQuestionsForCategory("povijest");
+            getQuestionsForCategory("književnost");
+        } else {
+            getQuestionsForCategory(gameName);
+        }
+
+        Collections.shuffle(questionPool);
+        // slice only first 10 questions for the game
+        if (NUMBER_OF_QUESTIONS >= questionPool.size()) {
+            questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
+        }
+
+        game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
+        displayNextQuestion();
+    }
+
+    private void getQuestionsForCategory(final String category) {
+        QuestionDAL.getQuestions(category, 4, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<AbstractQuestion> questionPool = new ArrayList<AbstractQuestion>();
-
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.FILL_IN);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_FILL_IN);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.MULTIPLE_CHOICE);
                 getQuestionsForType(dataSnapshot, questionPool, QuestionType.IMAGE_MULTIPLE_CHOICE);
 
-                Collections.shuffle(questionPool);
-                // slice only first 10 questions for the game
-//                questionPool = questionPool.subList(0, NUMBER_OF_QUESTIONS);
-                game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
-                displayNextQuestion();
+
             }
 
             private void getQuestionsForType(DataSnapshot dataSnapshot, List<AbstractQuestion> questionPool, QuestionType type) {
@@ -162,7 +178,6 @@ public class GameScreen extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void displayMultipleQuestion(MultipleChoiceQuestion question) {
@@ -236,19 +251,15 @@ public class GameScreen extends AppCompatActivity {
         currentQuestion = question;
 
         if (question instanceof ImageMultipleChoiceQuestion) {
-            Log.d("LOG", "1111111111111111111111111");
             setDisplayVisibility(View.VISIBLE, View.VISIBLE, View.GONE);
             displayMultipleChoiceWithImage((ImageMultipleChoiceQuestion) question);
         } else if (question instanceof MultipleChoiceQuestion) {
-            Log.d("LOG", "2222222222222222222222");
             setDisplayVisibility(View.GONE, View.VISIBLE, View.GONE);
             displayMultipleQuestion((MultipleChoiceQuestion) question);
         } else if (question instanceof ImageFillInQuestion) {
-            Log.d("LOG", "33333333333333333333333333");
             setDisplayVisibility(View.VISIBLE, View.GONE, View.VISIBLE);
             displayFillInQuestionWithImage((ImageFillInQuestion) question);
         } else if (question instanceof FillInQuestion) {
-            Log.d("LOG", "4444444444444444");
             setDisplayVisibility(View.GONE, View.GONE, View.VISIBLE);
             displayFillInQuestion((FillInQuestion) question);
         }

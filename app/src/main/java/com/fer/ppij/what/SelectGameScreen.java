@@ -57,6 +57,7 @@ public class SelectGameScreen extends AppCompatActivity {
 
         nicknameDisplayTextView.setText(nickname);
 
+
         goToGame1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
