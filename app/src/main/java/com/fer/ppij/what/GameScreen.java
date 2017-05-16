@@ -8,14 +8,10 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -50,7 +46,7 @@ import java.util.Random;
 
 public class GameScreen extends AppCompatActivity {
 
-    private final int NUMBER_OF_LIFES = 2;
+    private final int NUMBER_OF_LIVES = 2;
     private final String DEFAULT_BUTTONS_COLOR = "#d3d3d3";
     private static final int NUMBER_OF_QUESTIONS = 10;
 
@@ -128,7 +124,7 @@ public class GameScreen extends AppCompatActivity {
             getQuestionForCategory(gameName);
         }
 
-        game = new Game(gameName, questionPool, NUMBER_OF_LIFES);
+        game = new Game(gameName, questionPool, NUMBER_OF_LIVES);
     }
 
     private void getQuestionForCategory(final String category) {
