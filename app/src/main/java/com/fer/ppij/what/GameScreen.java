@@ -79,6 +79,7 @@ public class GameScreen extends AppCompatActivity {
     boolean answered = false;
     boolean fillInCorrect=false;
     boolean fillInFalse=false;
+    boolean isTest = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,9 @@ public class GameScreen extends AppCompatActivity {
         checkAnswerButton = (Button) findViewById(R.id.check_answer_button);
         buttonContinue = (FloatingActionButton) findViewById(R.id.button_continue);
         //fillInButtonContinue = (Button)findViewById(R.id.fill_in_button_continue);
+
+
+        if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA"))) isTest = true;
 
     }
 
@@ -416,7 +420,7 @@ public class GameScreen extends AppCompatActivity {
             animateColorChange(R.color.redBtnColor,R.color.greyColor,allLay);
             fillInFalse=false;
         }
-        if (game.isFinished()) {
+        if ((game.isFinished() && !isTest) || (game.getNumOfQuestions() == game.getCurrentQuestionNumber() && isTest)) {
             LoadEndScreen();
         } else {
             answered = false;

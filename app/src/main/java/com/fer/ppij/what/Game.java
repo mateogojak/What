@@ -68,5 +68,12 @@ public class Game {
         }
     }
 
+    public int getNumOfQuestions(){
+        return questionPool.size();
+    }
+
+    public int getCurrentQuestionNumber(){
+        return currentQuestionNumber;
+    }
 
 }
