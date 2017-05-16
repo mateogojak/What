@@ -137,6 +137,8 @@
                 <EditText
                     android:id="@+id/fill_edit_text"
                     android:textColor="#fff"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
                     android:layout_marginLeft="48dp"
                     android:layout_marginRight="48dp"
                     android:textSize="20sp"
