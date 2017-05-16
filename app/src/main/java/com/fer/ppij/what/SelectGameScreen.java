@@ -57,21 +57,27 @@ public class SelectGameScreen extends AppCompatActivity {
 
         nicknameDisplayTextView.setText(nickname);
 
+        /*
         //TODO: Questions for testing, delete after
         QuestionDAL.createQuestion("prvo", new FillInQuestion("Filin1", "Lijep", "povijest"));
         QuestionDAL.createQuestion("drugo", new FillInQuestion("Filin2", "Ružan", "povijest"));
         QuestionDAL.createQuestion("prvo", new MultipleChoiceQuestion("Multiple1", "Lijep", "povijest", "Lijep", "Odgovor1", "Odgovor2", "Odgovor3"));
         QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Multiple2", "Ružan", "povijest", "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
         QuestionDAL.createQuestion("drugo", new MultipleChoiceQuestion("Pritisni a", "a", "geografija", "a", "Odgovor1", "Odgovor2", "Odgovor3"));
+*/
 
         //TODO: Stvaranje pitanja sa slikom
         // ovdje možemo dohvatiti resurs ili sliku iz uređaja
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.europe);
+        //Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.portugal);
 
         // ovdje se stvara pitanje sa slikom u obliku (String id_pitanja, i pitanje)
-        QuestionDAL.createQuestion("prvo_fill_in", new ImageFillInQuestion("ImageFilin1", "Lijep", "povijest", bm));
-        QuestionDAL.createQuestion("prvo_multiple", new ImageMultipleChoiceQuestion("ImageMultiple2", "Ružan", "povijest",
-                bm, "Ružan", "Odgovor1", "Odgovor2", "Odgovor3"));
+        //QuestionDAL.createQuestion("2", new ImageFillInQuestion("Koja država je prikazana na slici", "Portugal", "geografija", bm));
+        //QuestionDAL.createQuestion("3", new ImageMultipleChoiceQuestion("Koja država je prikazana na slici", "Brazil", "geografija",
+         //       bm, "Brazil", "Argentina", "Čile", "Peru"));
+
+
+
+
 
         // TODO: Ovdje vam je stvaranje novog highscora i dohvaćanje prvih n najboljih na highscore-u
         //ScoreDAL.createNewScore(new ScoreModel(nickname, 50, "povijest"));

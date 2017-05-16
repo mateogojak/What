@@ -204,7 +204,10 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayFillInQuestionWithImage(ImageFillInQuestion question) {
         displayFillInQuestion(question);
-        questionImage.setImageBitmap(question.getImage());
+        String mDrawableName = question.getCorrectAnswer().toLowerCase();
+        int resID = getResources().getIdentifier(mDrawableName , "drawable", getPackageName());
+        questionImage.setImageResource(resID);
+        //questionImage.setImageBitmap(question.getImage());
     }
 
     public void displayNextQuestion() {

@@ -19,7 +19,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:id="@+id/questImage"
-                android:background="@drawable/europe"
                 android:visibility="gone"
                 android:layout_height="180dp"
                 android:scaleType="centerCrop"/>
@@ -71,7 +70,7 @@
                 android:id="@+id/button_continue"
                 android:onClick="OnContinueButtonClick"
                 android:visibility="gone"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="0dp"
                 android:layout_below="@+id/answerD"
                 android:layout_width="145dp"
                 android:layout_height="wrap_content"
