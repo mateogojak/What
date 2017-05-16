@@ -38,7 +38,7 @@ public class QuestionDAL {
 
     }
 
-    public static void storeQuestionImage(final String id, final AbstractQuestion question) {
+    private static void storeQuestionImage(final String id, final AbstractQuestion question) {
         Bitmap bitmap = null;
         if (question instanceof ImageMultipleChoiceQuestion) {
             bitmap = ((ImageMultipleChoiceQuestion) question).getImage();
@@ -50,13 +50,15 @@ public class QuestionDAL {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
             byte[] data = baos.toByteArray();
-            mStorage.child(id + "_" + category + ".jpg").putBytes(data);
+            mStorage.child(question.getQuestionType() + "_" + id + "_" + category + ".jpg").putBytes(data);
         }
     }
 
     public static void getQuestionImage(String id, final AbstractQuestion question, OnSuccessListener<byte[]> onSuccessListener) {
         String category = question.getCategory();
-        storage.getReferenceFromUrl("gs://ppij-project-what.appspot.com/" + id + "_" + category + ".jpg")
+        String url = "gs://ppij-project-what.appspot.com/" + question.getQuestionType() + "_" + id + "_" + category + ".jpg";
+        System.out.println(url);
+        storage.getReferenceFromUrl(url)
                 .getBytes(1024*1024)
                 .addOnSuccessListener(onSuccessListener);
     }

@@ -48,3 +48,46 @@
 //
 //            }
 //        });
+
+// stvaranje pitanja sa slikom
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.japan);
+        String drzavaNaSlici = "Koja je država označena na slici?";
+        String zastavaNaSlici = "Kojoj državi pripada zastava sa slike?";
+        QuestionDAL.createQuestion("1", new ImageFillInQuestion(zastavaNaSlici, "Japan", "geografija", bm));
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.finska);
+        QuestionDAL.createQuestion("2", new ImageFillInQuestion(drzavaNaSlici, "Finska", "geografija", bm));
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.portugal);
+        QuestionDAL.createQuestion("3", new ImageFillInQuestion(drzavaNaSlici, "portugal", "geografija", bm));
+
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.island);
+        QuestionDAL.createQuestion("1", new ImageMultipleChoiceQuestion(
+                drzavaNaSlici,
+                "Island",
+                "geografija",
+                bm,
+                "Island","Irska", "Švedska", "Norveška"
+        ));
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.rusija);
+        QuestionDAL.createQuestion("2", new ImageMultipleChoiceQuestion(
+                zastavaNaSlici,
+                "Rusija",
+                "geografija",
+                bm,
+                "Rusija","Hrvatska", "Slovenija", "Slovačka"
+        ));
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.slovenija);
+        QuestionDAL.createQuestion("3", new ImageMultipleChoiceQuestion(
+                drzavaNaSlici,
+                "Slovenija",
+                "geografija",
+                bm,
+                "Austrija","Hrvatska", "Slovenija", "Mađarska"
+        ));
+        bm = BitmapFactory.decodeResource(getResources(), R.drawable.danska);
+        QuestionDAL.createQuestion("4", new ImageMultipleChoiceQuestion(
+                zastavaNaSlici,
+                "Danska",
+                "geografija",
+                bm,
+                "Danska","Norveška", "Švicarska", "Engleska"
+        ));

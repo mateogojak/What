@@ -115,8 +115,7 @@ public class GameScreen extends AppCompatActivity {
                             break;
                         case IMAGE_FILL_IN:
                             ImageFillInQuestion imf = questionSnapshot.getValue(ImageFillInQuestion.class);
-                            String category = imf.getCategory();
-                            QuestionDAL.getQuestionImage(id + "_" + category, imf, new OnSuccessListener<byte[]>() {
+                            QuestionDAL.getQuestionImage(id, imf, new OnSuccessListener<byte[]>() {
                                 private ImageFillInQuestion imf;
 
                                 private OnSuccessListener<byte[]> init(ImageFillInQuestion imf) {
@@ -126,7 +125,6 @@ public class GameScreen extends AppCompatActivity {
 
                                 @Override
                                 public void onSuccess(byte[] bytes) {
-                                    Log.d("AAA","ovo je kurac " + bytes.length);
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     imf.setImage(bitmap);
                                 }
@@ -138,7 +136,7 @@ public class GameScreen extends AppCompatActivity {
                             break;
                         case IMAGE_MULTIPLE_CHOICE:
                             ImageMultipleChoiceQuestion imc = questionSnapshot.getValue(ImageMultipleChoiceQuestion.class);
-                            QuestionDAL.getQuestionImage("prvo", imc, new OnSuccessListener<byte[]>() {
+                            QuestionDAL.getQuestionImage(id, imc, new OnSuccessListener<byte[]>() {
                                 private ImageMultipleChoiceQuestion imc;
 
                                 private OnSuccessListener<byte[]> init(ImageMultipleChoiceQuestion imc) {
