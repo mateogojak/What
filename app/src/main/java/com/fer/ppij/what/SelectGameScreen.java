@@ -21,6 +21,9 @@ import com.fer.ppij.what.database.model.ScoreModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Mateo on 5/2/2017.
@@ -32,6 +35,9 @@ public class SelectGameScreen extends AppCompatActivity {
     private TextView nicknameDisplayTextView;
     private Button goToGame1, goToGame2, goToGame3, goToGame4, goToRoom, createRoom;
     private EditText roomNameEditText;
+
+
+    private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("questions");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,18 +111,35 @@ public class SelectGameScreen extends AppCompatActivity {
 
                 if (roomNameEditText.getText().length() != 0) {
 
+
+
                     if (roomNameEditText.getText().toString().equals(goToGame1.getText()) || roomNameEditText.getText().toString().equals(goToGame2.getText()) || roomNameEditText.getText().toString().equals(goToGame3.getText()) || roomNameEditText.getText().toString().equals(goToGame4.getText())) {
 
                         //ispisuje se nekakva poruka da se ne moze pristupiti sobi koja ima ime kao neko od zadanih podrucja.
                         Toast.makeText(getApplicationContext(), "Ime testa ne smije odgovarati zadanim područjima", Toast.LENGTH_SHORT).show();
 
                     } else {
+                        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                if (snapshot.hasChild(roomNameEditText.getText().toString())) {
 
-                        Intent intent = new Intent(SelectGameScreen.this, GameScreen.class);
-                        intent.putExtra("nickname", nickname);
-                        intent.putExtra("gameName", roomNameEditText.getText().toString());
-                        startActivity(intent);
+                                    Intent intent = new Intent(SelectGameScreen.this, GameScreen.class);
+                                    intent.putExtra("nickname", nickname);
+                                    intent.putExtra("gameName", roomNameEditText.getText().toString());
+                                    startActivity(intent);
 
+                                }else{
+
+                                    Toast.makeText(getApplicationContext(), "Ne postoji test s tim imenom!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Upiši ime testa", Toast.LENGTH_SHORT).show();

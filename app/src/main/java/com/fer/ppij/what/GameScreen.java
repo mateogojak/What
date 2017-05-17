@@ -108,13 +108,9 @@ public class GameScreen extends AppCompatActivity {
         checkAnswerButton = (Button) findViewById(R.id.check_answer_button);
         buttonContinue = (FloatingActionButton) findViewById(R.id.button_continue);
 
-        if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA"))) isTest = true;
+        if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA") || gameName.toUpperCase().equals("RANDOM") )) isTest = true;
         if(isTest)zivotLayout.setVisibility(View.GONE);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         if(gameName.equalsIgnoreCase("random")) {
             getQuestionForCategory("književnost");
@@ -125,6 +121,12 @@ public class GameScreen extends AppCompatActivity {
         }
 
         game = new Game(gameName, questionPool, NUMBER_OF_LIVES);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     private void getQuestionForCategory(final String category) {
@@ -236,7 +238,14 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayMultipleChoiceWithImage(ImageMultipleChoiceQuestion question) {
         displayMultipleQuestion(question);
-        questionImage.setImageBitmap(question.getImage());
+        String mDrawableName = question.getCorrectAnswer().toLowerCase();
+        int resID = getResources().getIdentifier(mDrawableName , "drawable", getPackageName());
+        if(question.getImage() != null){
+            questionImage.setImageBitmap(question.getImage());
+        }
+        else{
+            questionImage.setImageResource(resID);
+        }
     }
 
     public void displayFillInQuestion(FillInQuestion question) {
@@ -245,7 +254,14 @@ public class GameScreen extends AppCompatActivity {
 
     public void displayFillInQuestionWithImage(ImageFillInQuestion question) {
         displayFillInQuestion(question);
-        questionImage.setImageBitmap(question.getImage());
+        String mDrawableName = question.getCorrectAnswer().toLowerCase();
+        int resID = getResources().getIdentifier(mDrawableName , "drawable", getPackageName());
+        if(question.getImage() != null){
+            questionImage.setImageBitmap(question.getImage());
+        }
+        else{
+            questionImage.setImageResource(resID);
+        }
     }
 
     public void displayNextQuestion() {
@@ -483,7 +499,6 @@ public class GameScreen extends AppCompatActivity {
             } else {
                 fillInFalse=true;
                 animateColorChange(R.color.greyColor,R.color.redBtnColor,allLay);
-                game.decreaseNumberOfLives();
                 game.decreaseNumberOfLives();
                 if(game.getLives()==1){
                     drugiZivot.setVisibility(View.GONE);

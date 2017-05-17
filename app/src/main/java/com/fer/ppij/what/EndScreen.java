@@ -67,6 +67,7 @@ public class EndScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EndScreen.this, SelectGameScreen.class);
+                intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 finish();
             }
@@ -139,7 +140,13 @@ public class EndScreen extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ScoreModel smodel = dataSnapshot.getValue(ScoreModel.class);
-                data.add(smodel);
+                boolean isTest=false;
+                boolean isMainCategory=false;
+                if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA") || gameName.toUpperCase().equals("RANDOM") ))isTest = true;
+                if(smodel.getCategory()!=null){
+                    if((smodel.getCategory().toUpperCase().equals("KNJIŽEVNOST") || smodel.getCategory().toUpperCase().equals("POVIJEST") || smodel.getCategory().toUpperCase().equals("GEOGRAFIJA") || smodel.getCategory().toUpperCase().equals("RANDOM") ))isMainCategory = true;
+                }
+                if(isTest && (gameName.equals(smodel.getCategory())) || isMainCategory && !isTest)data.add(smodel);
                 Collections.sort(data);
                 if (data.size() > SCOREBOARD_SIZE) {
                     data = data.subList(0, SCOREBOARD_SIZE);
