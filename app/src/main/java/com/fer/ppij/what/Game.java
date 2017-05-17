@@ -1,5 +1,7 @@
 package com.fer.ppij.what;
 
+import android.widget.Toast;
+
 import com.fer.ppij.what.database.model.AbstractQuestion;
 
 import java.util.List;
@@ -57,7 +59,9 @@ public class Game {
             return questionPool.get(curr);
         } else {
             currentQuestionNumber = 1;
-            return questionPool.get(0);
+
+                return questionPool.get(0);
+
         }
     }
 

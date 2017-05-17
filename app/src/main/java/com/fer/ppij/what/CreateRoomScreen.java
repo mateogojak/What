@@ -16,6 +16,8 @@ import com.fer.ppij.what.database.QuestionDAL;
 import com.fer.ppij.what.database.model.AbstractQuestion;
 import com.fer.ppij.what.database.model.FillInQuestion;
 import com.fer.ppij.what.database.model.MultipleChoiceQuestion;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,7 @@ public class CreateRoomScreen extends AppCompatActivity {
 
     private Switch switchTypeOfQuestions;
     private boolean checked = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
