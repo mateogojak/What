@@ -108,13 +108,9 @@ public class GameScreen extends AppCompatActivity {
         checkAnswerButton = (Button) findViewById(R.id.check_answer_button);
         buttonContinue = (FloatingActionButton) findViewById(R.id.button_continue);
 
-        if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA"))) isTest = true;
+        if(!(gameName.toUpperCase().equals("KNJIŽEVNOST") || gameName.toUpperCase().equals("POVIJEST") || gameName.toUpperCase().equals("GEOGRAFIJA") || gameName.toUpperCase().equals("RANDOM") )) isTest = true;
         if(isTest)zivotLayout.setVisibility(View.GONE);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         if(gameName.equalsIgnoreCase("random")) {
             getQuestionForCategory("književnost");
@@ -125,6 +121,12 @@ public class GameScreen extends AppCompatActivity {
         }
 
         game = new Game(gameName, questionPool, NUMBER_OF_LIVES);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     private void getQuestionForCategory(final String category) {
